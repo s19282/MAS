@@ -9,6 +9,7 @@ public class Main
     {
         z1(8,12);
         z2();
+        z3();
     }
 
     static void z1(int a, int b)
@@ -71,6 +72,17 @@ public class Main
         System.out.println(list);
         System.out.println(set);
         System.out.println(map);
+    }
+
+    static void z3()
+    {
+        List<Animal> animals = new ArrayList<>();
+        animals.add(new Dog());
+        animals.add(new Cat());
+        for (Animal a : animals)
+        {
+            a.move();
+        }
     }
 
 }
