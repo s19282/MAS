@@ -10,6 +10,7 @@ public class Main
         z1(8,12);
         z2();
         z3();
+        z4();
     }
 
     static void z1(int a, int b)
@@ -83,6 +84,15 @@ public class Main
         {
             a.move();
         }
+    }
+
+    static void z4()
+    {
+        Engine engine = new Engine();
+
+        engine.makeSound(new Rotary());
+        engine.makeSound(new Piston());
+        engine.makeSound(new Electric());
     }
 
 }

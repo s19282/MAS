@@ -1,6 +1,11 @@
 package com.company;
 
-public enum EngineType
+public class EngineType
 {
-    ROTARY, PISTON, ELECTRIC
+    String type;
+
+    void showType()
+    {
+        System.out.println("Default");
+    }
 }

@@ -2,12 +2,19 @@ package com.company;
 
 public class Engine
 {
-    public void makeSound(EngineType engineType)
+    public void makeSound(Rotary engineType)
     {
-        System.out.println("Rotary sound");
+        engineType.showType();
+        System.out.println("Rotary engine sound");
     }
-    public void makeSound(EngineType engineType)
+    public void makeSound(Piston engineType)
     {
-        System.out.println("Rotary sound");
+        engineType.showType();
+        System.out.println("Piston engine sound");
+    }
+    public void makeSound(Electric engineType)
+    {
+        engineType.showType();
+        System.out.println("Electric engine sound");
     }
 }
