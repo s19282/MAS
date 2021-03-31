@@ -1,7 +1,12 @@
 package com.company;
 
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main
 {
@@ -12,6 +17,7 @@ public class Main
         z3();
         z4();
         z5();
+        z6();
     }
 
     static void z1(int a, int b)
@@ -116,5 +122,31 @@ public class Main
         System.out.println("sum>50 "+(sum>50));
 
 
+    }
+
+    static void z6()
+    {
+        List<Student> students = new ArrayList<>();
+        students.add(new Student("fName1","lName1",1));
+        students.add(new Student("fName2","lName2",2));
+        students.add(new Student("fName3","lName3",3));
+
+        File file = new File("students.csv");
+        try(PrintWriter pw = new PrintWriter(file))
+        {
+            students.forEach(i->pw.println(i+","));
+            System.out.println("Written to file");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try (Stream<String> lines = Files.lines(Paths.get("students.csv"), Charset.defaultCharset()))
+        {
+            lines.forEachOrdered(System.out::println);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
