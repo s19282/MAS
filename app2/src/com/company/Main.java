@@ -1,14 +1,10 @@
 package com.company;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Main {
@@ -18,6 +14,7 @@ public class Main {
 	    z2();
 	    z3();
 	    z4(Integer.parseInt(args[0]));
+	    z5();
     }
 
     static void z1()
@@ -58,5 +55,12 @@ public class Main {
         {
             e.printStackTrace();
         }
+    }
+
+    static void z5()
+    {
+        Person person1 = new Person("fName","lName",Sex.FEMALE, LocalDate.of(1950, 2, 1) );
+        System.out.println(person1);
+        person1.calculateAge();
     }
 }
