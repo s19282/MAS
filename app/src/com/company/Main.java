@@ -11,6 +11,7 @@ public class Main
         z2();
         z3();
         z4();
+        z5();
     }
 
     static void z1(int a, int b)
@@ -95,4 +96,25 @@ public class Main
         engine.makeSound(new Electric());
     }
 
+    static void z5()
+    {
+        List<Product> products = new ArrayList<>();
+
+        for(int i=0; i<10; i++)
+        {
+            products.add(new Product(Math.random()+"",Math.random()*10));
+        }
+        System.out.println(products);
+
+        List<Product> filteredProducts = products.stream().filter(i-> i.price>5).collect(Collectors.toList());
+        System.out.println(filteredProducts);
+
+
+        double sum = products.stream().mapToDouble(i->i.price).sum();
+        System.out.println("Sum: "+sum);
+
+        System.out.println("sum>50 "+(sum>50));
+
+
+    }
 }
