@@ -15,21 +15,21 @@ public class Main {
         System.out.println(visit2.getCost());
 
         Visit.showExtent();
-
-        try
-        {
-            FileOutputStream fos = new FileOutputStream("extent.txt");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            Visit.writeExtent(oos);
-
-
-
-            FileInputStream fis = new FileInputStream("extent.txt");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            Visit.readExtent(ois);
-
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+//
+//        try
+//        {
+//            FileOutputStream fos = new FileOutputStream("extent.txt");
+//            ObjectOutputStream oos = new ObjectOutputStream(fos);
+//            Visit.writeExtent(oos);
+//
+//
+//
+//            FileInputStream fis = new FileInputStream("extent.txt");
+//            ObjectInputStream ois = new ObjectInputStream(fis);
+//            Visit.readExtent(ois);
+//
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
     }
 }

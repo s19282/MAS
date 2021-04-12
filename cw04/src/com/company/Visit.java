@@ -11,21 +11,20 @@ import java.util.Optional;
 
 public class Visit implements Serializable
 {
-    LocalDate startDate;
-    LocalDate expectedEndDate;
-    Optional<LocalDate> endDate = Optional.empty();
-//    TODO: replace optional with standard reference
-    Double estimatedCost;
-    Optional<Double> cost = Optional.empty();
-    static Double manHourCost = 200D;
+    private LocalDate startDate;
+    private LocalDate expectedEndDate;
+    private LocalDate endDate;
+    private Double estimatedCost;
+    private Double cost;
+    private static Double manHourCost = 200D;
     private static List<Visit> extent = new ArrayList<>();
 
     public Visit(LocalDate startDate, LocalDate expectedEndDate, LocalDate endDate, Double estimatedCost, Double cost) {
         this.startDate = startDate;
         this.expectedEndDate = expectedEndDate;
-        this.endDate = Optional.ofNullable(endDate);
+        this.endDate = endDate;
         this.estimatedCost = estimatedCost;
-        this.cost = Optional.ofNullable(cost);
+        this.cost = cost;
         addVisit(this);
     }
 
@@ -36,12 +35,52 @@ public class Visit implements Serializable
         addVisit(this);
     }
 
-    public Optional<LocalDate> getEndDate() {
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getExpectedEndDate() {
+        return expectedEndDate;
+    }
+
+    public void setExpectedEndDate(LocalDate expectedEndDate) {
+        this.expectedEndDate = expectedEndDate;
+    }
+
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public Optional<Double> getCost() {
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public Double getEstimatedCost() {
+        return estimatedCost;
+    }
+
+    public void setEstimatedCost(Double estimatedCost) {
+        this.estimatedCost = estimatedCost;
+    }
+
+    public Double getCost() {
         return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
+
+    public static Double getManHourCost() {
+        return manHourCost;
+    }
+
+    public static void setManHourCost(Double manHourCost) {
+        Visit.manHourCost = manHourCost;
     }
 
     private static void addVisit(Visit visit)
@@ -52,6 +91,7 @@ public class Visit implements Serializable
     {
         extent.remove(visit);
     }
+
     public static void showExtent()
     {
         System.out.println("Extent of the class: " + Visit.class.getName());
@@ -74,9 +114,9 @@ public class Visit implements Serializable
         return "Visit{" +
                 "startDate=" + startDate +
                 ", expectedEndDate=" + expectedEndDate +
-                ", endDate=" + (getEndDate().isPresent() ? getEndDate() : "End date not set") +
+                ", endDate=" + (getEndDate() != null ? getEndDate() : "End date not set") +
                 ", estimatedCost=" + estimatedCost +
-                ", cost=" + (getCost().isPresent() ? getCost() : "Cost not set") +
+                ", cost=" + (getCost() != null ? getCost() : "Cost not set") +
                 '}';
     }
 }
