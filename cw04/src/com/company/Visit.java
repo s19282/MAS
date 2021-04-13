@@ -8,9 +8,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class Visit implements Serializable
-{
+public class Visit implements Serializable {
     private LocalDate startDate;
     private LocalDate expectedEndDate;
     private LocalDate endDate;
@@ -35,6 +35,18 @@ public class Visit implements Serializable
         addVisit(this);
     }
 
+    public static List<Visit> getVisits(LocalDate dateSince, LocalDate dateTo)
+    {
+        return  extent.stream().filter(visit -> visit.startDate.isAfter(dateSince.minusDays(1)) && visit.startDate.isBefore(dateTo.plusDays(1))).collect(Collectors.toList());
+    }
+    public static List<Visit> getVisits(LocalDate dateSince)
+    {
+        return  extent.stream().filter(visit -> visit.startDate.isAfter(dateSince.minusDays(1))).collect(Collectors.toList());
+    }
+    public void remove()
+    {
+        removeVisit(this);
+    }
     public LocalDate getStartDate() {
         return startDate;
     }
