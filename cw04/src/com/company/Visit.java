@@ -6,8 +6,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Visit implements Serializable {
@@ -16,22 +16,33 @@ public class Visit implements Serializable {
     private LocalDate endDate;
     private Double estimatedCost;
     private Double cost;
+    private List<Repair> repairs;
     private static Double manHourCost = 200D;
     private static List<Visit> extent = new ArrayList<>();
 
-    public Visit(LocalDate startDate, LocalDate expectedEndDate, LocalDate endDate, Double estimatedCost, Double cost) {
+    public List<Repair> getRepairs() {
+        return repairs;
+    }
+
+    public void setRepairs(List<Repair> repairs) {
+        this.repairs = repairs;
+    }
+
+    public Visit(LocalDate startDate, LocalDate expectedEndDate, LocalDate endDate, Double estimatedCost, Double cost, List<Repair> repairs) {
         this.startDate = startDate;
         this.expectedEndDate = expectedEndDate;
         this.endDate = endDate;
         this.estimatedCost = estimatedCost;
         this.cost = cost;
+        this.repairs = repairs;
         addVisit(this);
     }
 
-    public Visit(LocalDate startDate, LocalDate expectedEndDate, Double estimatedCost) {
+    public Visit(LocalDate startDate, LocalDate expectedEndDate, Double estimatedCost, List<Repair> repairs) {
         this.startDate = startDate;
         this.expectedEndDate = expectedEndDate;
         this.estimatedCost = estimatedCost;
+        this.repairs = repairs;
         addVisit(this);
     }
 
@@ -79,12 +90,22 @@ public class Visit implements Serializable {
         this.estimatedCost = estimatedCost;
     }
 
-    public Double getCost() {
-        return cost;
+    public Double getCost() 
+    {
+        double sum = 0D;
+        for (Repair r : repairs)
+        {
+            sum += r.getDuration() * manHourCost + r.getPartsCost();
+        }
+        return sum;
     }
 
-    public void setCost(Double cost) {
-        this.cost = cost;
+    public void setCost() {
+        cost = 0D;
+        for (Repair r : repairs)
+        {
+            cost += r.getDuration() * manHourCost + r.getPartsCost();
+        }
     }
 
     public static Double getManHourCost() {
@@ -107,6 +128,10 @@ public class Visit implements Serializable {
     public static void showExtent()
     {
         System.out.println("Extent of the class: " + Visit.class.getName());
+        if (extent.size()==0)
+        {
+            System.out.println("Extent is empty");
+        }
         for(Visit visit : extent)
         {
             System.out.println(visit);

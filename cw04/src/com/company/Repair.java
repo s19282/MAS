@@ -8,12 +8,14 @@ public class Repair
     private String description;
     private LocalTime duration;
     private RepairState state;
+    private Double partsCost;
 
-    public Repair(String partName, String description, LocalTime duration, RepairState state) {
+    public Repair(String partName, String description, LocalTime duration, RepairState state, Double cost) {
         this.partName = partName;
         this.description = description;
         this.duration = duration;
         this.state = state;
+        this.partsCost = cost;
     }
 
     public String getPartName() {
@@ -32,8 +34,8 @@ public class Repair
         this.description = description;
     }
 
-    public LocalTime getDuration() {
-        return duration;
+    public int getDuration() {
+        return duration.getHour();
     }
 
     public void setDuration(LocalTime duration) {
@@ -46,5 +48,13 @@ public class Repair
 
     public void setState(RepairState state) {
         this.state = state;
+    }
+
+    public Double getPartsCost() {
+        return partsCost;
+    }
+
+    public void setPartsCost(Double partsCost) {
+        this.partsCost = partsCost;
     }
 }
