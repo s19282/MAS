@@ -67,6 +67,9 @@ public class Main {
 //      Repeatable attribute
         System.out.println(visit5.getRepairs());
         System.out.println("--------------------");
+//      Class attribute
+        System.out.println(Visit.getManHourCost());
+        System.out.println("--------------------");
 //      Derived attribute
         System.out.println("Cost: " + visit4.getCost());
         System.out.println("--------------------");
