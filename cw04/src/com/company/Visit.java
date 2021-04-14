@@ -10,12 +10,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Visit implements Serializable {
+public class Visit implements Serializable
+{
     private LocalDate startDate;
     private LocalDate expectedEndDate;
     private LocalDate endDate;
     private Double estimatedCost;
-    private Double cost;
     private List<Repair> repairs;
     private static Double manHourCost = 200D;
     private static List<Visit> extent = new ArrayList<>();
@@ -28,12 +28,11 @@ public class Visit implements Serializable {
         this.repairs = repairs;
     }
 
-    public Visit(LocalDate startDate, LocalDate expectedEndDate, LocalDate endDate, Double estimatedCost, Double cost, List<Repair> repairs) {
+    public Visit(LocalDate startDate, LocalDate expectedEndDate, LocalDate endDate, Double estimatedCost, List<Repair> repairs) {
         this.startDate = startDate;
         this.expectedEndDate = expectedEndDate;
         this.endDate = endDate;
         this.estimatedCost = estimatedCost;
-        this.cost = cost;
         this.repairs = repairs;
         addVisit(this);
     }
@@ -92,21 +91,14 @@ public class Visit implements Serializable {
 
     public Double getCost() 
     {
-        double sum = 0D;
-        for (Repair r : repairs)
-        {
-            sum += r.getDuration() * manHourCost + r.getPartsCost();
-        }
-        return sum;
-    }
-
-    public void setCost() {
-        cost = 0D;
+        double cost = 0D;
         for (Repair r : repairs)
         {
             cost += r.getDuration() * manHourCost + r.getPartsCost();
         }
+        return cost;
     }
+
 
     public static Double getManHourCost() {
         return manHourCost;

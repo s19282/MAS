@@ -1,8 +1,9 @@
 package com.company;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 
-public class Repair
+public class Repair implements Serializable
 {
     private String partName;
     private String description;
@@ -16,6 +17,11 @@ public class Repair
         this.duration = duration;
         this.state = state;
         this.partsCost = cost;
+    }
+    public Repair(LocalTime duration, Double partsCost)
+    {
+        this.duration = duration;
+        this.partsCost = partsCost;
     }
 
     public String getPartName() {
@@ -56,5 +62,16 @@ public class Repair
 
     public void setPartsCost(Double partsCost) {
         this.partsCost = partsCost;
+    }
+
+    @Override
+    public String toString() {
+        return "Repair{" +
+                "partName='" + partName + '\'' +
+                ", description='" + description + '\'' +
+                ", duration=" + duration +
+                ", state=" + state +
+                ", partsCost=" + partsCost +
+                '}';
     }
 }
