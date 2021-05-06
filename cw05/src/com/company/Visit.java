@@ -46,7 +46,7 @@ public class Visit implements Serializable
         }
 
     }
-
+//TODO: check private
     public void removeRepair(Repair repair)
     {
         repairs.remove(repair);

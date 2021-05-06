@@ -14,7 +14,6 @@ public class Main
         Repair r1 = new Repair(LocalTime.of(3,0),450D);
         Repair r2 = new Repair(LocalTime.of(2,3),560D);
         Repair r3 = new Repair(LocalTime.of(6,6),720D);
-        Repair r4 = new Repair(LocalTime.of(7,3),90D);
 
         v1.addRepair(r1);
         v1.addRepair(r2);
@@ -27,5 +26,27 @@ public class Main
         System.out.println(r3.showRepair());
         System.out.println("-----------");
         System.out.println(v2);
+
+        System.out.println("===========");
+//      association class
+
+        Vehicle vehicle1 = new Vehicle("Lexus", "Is", "ABC 1234");
+        Vehicle vehicle2 = new Vehicle("Subaru", "Impreza", "CBA 1234");
+
+        Client client1 = new Client("John", "Adams", 1234567);
+
+        Rent rent1 = new Rent(LocalDate.now().plusDays(1),LocalDate.now().plusDays(5), 50D,vehicle1,client1);
+        Rent rent2 = new Rent(LocalDate.now().plusDays(1),LocalDate.now().plusDays(5), 30D,vehicle1,client1);
+        Rent rent3 = new Rent(LocalDate.now().plusDays(1),LocalDate.now().plusDays(8), 70D,vehicle2,client1);
+
+        System.out.println(vehicle1);
+        System.out.println(vehicle2);
+        System.out.println("-----------");
+
+        System.out.println(client1);
+        System.out.println("-----------");
+
+        System.out.println(rent1);
+        System.out.println("===========");
     }
 }
