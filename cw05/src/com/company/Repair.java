@@ -35,7 +35,6 @@ public class Repair implements Serializable
 
     public void setVisit(Visit visit)
     {
-//        TODO: check this method once more
         if(this.visit!=null)
         {
             if(this.visit!=visit)

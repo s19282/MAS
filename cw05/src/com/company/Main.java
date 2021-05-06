@@ -48,5 +48,6 @@ public class Main
 
         System.out.println(rent1);
         System.out.println("===========");
+
     }
 }
