@@ -54,6 +54,14 @@ public class Rent
             client.addRent(this);
         }
     }
+    void destroy()
+    {
+        this.dateSince = null;
+        this.dateTo = null;
+        this.hourlyRate = null;
+        this.vehicle = null;
+        this.client = null;
+    }
 
     public Vehicle getVehicle() {
         return vehicle;
@@ -89,31 +97,31 @@ public class Rent
 
     public String showVehicleOnly()
     {
-        return "\n\tRent\n\t{" + "\n" +
-                "\t\tdateSince=" + dateSince + "\n" +
-                "\t\tdateTo=" + dateTo + "\n" +
-                "\t\thourlyRate=" + hourlyRate + "\n" +
-                "\t\tvehicle=" + vehicle.showVehicle() + "\n" +
-                "\t}";
+        return "Rent{" +
+                "dateSince=" + dateSince +
+                ", dateTo=" + dateTo +
+                ", hourlyRate=" + hourlyRate +
+                ", vehicle=" + vehicle.showVehicle() +
+                "}";
     }
     public String showClientOnly()
     {
-        return "\n\tRent\n\t{" + "\n" +
-                "\t\tdateSince=" + dateSince + "\n" +
-                "\t\tdateTo=" + dateTo + "\n" +
-                "\t\thourlyRate=" + hourlyRate + "\n" +
-                "\t\tclient=" + client.showClient() + "\n" +
-                "\t}";
+        return "Rent{" +
+                "dateSince=" + dateSince +
+                ", dateTo=" + dateTo +
+                ", hourlyRate=" + hourlyRate +
+                ", client=" + client.showClient() +
+                "}";
     }
 
     @Override
     public String toString() {
-        return "Rent\n{" + "\n" +
-                "\tdateSince=" + dateSince + "\n" +
-                "\tdateTo=" + dateTo + "\n" +
-                "\thourlyRate=" + hourlyRate + "\n" +
-                "\tvehicle=" + vehicle.showVehicle() + "\n" +
-                "\tclient=" + client.showClient() + "\n" +
+        return "Rent{" +
+                "dateSince=" + (dateSince != null ? dateSince : "null") +
+                ", dateTo=" + (dateTo != null ? dateTo : "null") +
+                ", hourlyRate=" + (hourlyRate != null ? hourlyRate : "null") +
+                ", vehicle=" + (vehicle != null ? vehicle.showVehicle() : "null") +
+                ", client=" + (client != null ? client.showClient() : "null") +
                 "}";
     }
 }

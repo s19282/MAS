@@ -36,6 +36,11 @@ public class Vehicle
     void removeRent(Rent rent)
     {
         rents.remove(rent);
+        if(rent.getClient().getRents().contains(rent))
+        {
+            rent.getClient().removeRent(rent);
+        }
+        rent.destroy();
     }
 
     public void setMake(String make) {
@@ -59,11 +64,11 @@ public class Vehicle
     }
     public String showVehicle()
     {
-        return "Vehicle\n\t\t{" + "\n" +
-            "\t\t\tmake='" + make + '\n' +
-            "\t\t\tmodel='" + model + '\n' +
-            "\t\t\tlicencePlateNumber='" + licencePlateNumber + '\n' +
-            "\t\t}";
+        return "Vehicle{" +
+            "make='" + make +
+            ", model='" + model +
+            ", licencePlateNumber='" + licencePlateNumber +
+            "}";
     }
 
     @Override
@@ -71,11 +76,11 @@ public class Vehicle
         StringBuilder rentsString = new StringBuilder();
         for (Rent rent : rents) rentsString.append(rent.showClientOnly());
 
-        return "Vehicle\n{" + "\n" +
-                "\tmake='" + make + '\n' +
-                "\tmodel='" + model + '\n' +
-                "\tlicencePlateNumber='" + licencePlateNumber + '\n' +
-                "\trents=[" + rentsString + "]\n" +
+        return "Vehicle{" +
+                "make='" + make +
+                ", model='" + model +
+                ", licencePlateNumber='" + licencePlateNumber +
+                ", rents=[" + rentsString +
                 "}";
     }
 }

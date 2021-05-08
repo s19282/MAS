@@ -32,6 +32,11 @@ public class Client
     void removeRent(Rent rent)
     {
         rents.remove(rent);
+        if(rent.getVehicle().getRents().contains(rent))
+        {
+            rent.getVehicle().removeRent(rent);
+        }
+        rent.destroy();
     }
 
     public String getFirstName() {
@@ -59,11 +64,11 @@ public class Client
     }
     public String showClient()
     {
-        return "Client\n\t\t{" + "\n" +
-                "\t\t\tfirstName='" + firstName + '\n' +
-                "\t\t\tlastName='" + lastName + '\n' +
-                "\t\t\tphoneNumber=" + phoneNumber + "\n" +
-                "\t\t}";
+        return "Client{" +
+                "firstName='" + firstName +
+                ", lastName='" + lastName +
+                ", phoneNumber=" + phoneNumber +
+                "}";
     }
 
     @Override
@@ -71,11 +76,11 @@ public class Client
         StringBuilder rentsString = new StringBuilder();
         for (Rent rent : rents) rentsString.append(rent.showVehicleOnly());
 
-        return "Client\n{" + "\n" +
-                "\tfirstName=" + firstName + '\n' +
-                "\tlastName=" + lastName + '\n' +
-                "\tphoneNumber=" + phoneNumber + "\n" +
-                "\trents=[" + rentsString + "]\n" +
+        return "Client{" +
+                "firstName=" + firstName +
+                ", lastName=" + lastName +
+                ", phoneNumber=" + phoneNumber +
+                ", rents=[" + rentsString +
                 "}";
     }
 }
