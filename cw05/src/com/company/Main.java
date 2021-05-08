@@ -29,7 +29,8 @@ public class Main
 //
 //        System.out.println("===========");
 ////      association class
-//
+//  TODO: change brands
+
 //        Vehicle vehicle1 = new Vehicle("Lexus", "Is", "ABC 1234");
 //        Vehicle vehicle2 = new Vehicle("Subaru", "Impreza", "CBA 1234");
 //
@@ -50,21 +51,30 @@ public class Main
 //        System.out.println("===========");
 //        todo check what happened after update
 //        qualified association
-        Employee employee1 = new Employee("Helen","Hurt",1);
-        Employee employee2 = new Employee("Leo", "Graham", 33);
+//        Employee employee1 = new Employee("Helen","Hurt",1);
+//        Employee employee2 = new Employee("Leo", "Graham", 33);
+//
+//        Order order1 = new Order("Product1, Product2");
+//        Order order2 = new Order("Product3, Product5");
+//        employee1.addOrderQualified(order1);
+//
+//        System.out.println(employee1);
+//        System.out.println(order1);
+//
+//        System.out.println("-----------");
+//        order2.addEmployee(employee2);
+//        System.out.println(employee2);
+//        System.out.println(order2);
 
-        Order order1 = new Order("Product1, Product2");
-        Order order2 = new Order("Product3, Product5");
-        employee1.addOrderQualified(order1);
+//        composition
+        System.out.println("===========");
 
-        System.out.println(employee1);
-        System.out.println(order1);
+        Car car = new Car("Bmw","i8","automatic","4wd",2014);
+        Car.Engine engine1 = car.createEngine("15dwob","petrol", 231);
+        Car.Engine engine2 = car.createEngine("654fjh","electric", 131);
 
-        System.out.println("-----------");
-        order2.addEmployee(employee2);
-        System.out.println(employee2);
-        System.out.println(order2);
-
+        System.out.println(car);
+        System.out.println(engine1.showEngine());
 
     }
 }
