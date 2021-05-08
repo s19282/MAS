@@ -20,8 +20,24 @@ public class Order
     }
 
     public void addEmployee(Employee employee) {
-        this.employee = employee; //TODO: more
+        //this.employee = employee; //TODO: more
+
+        if(this.employee!=null)
+        {
+            if(this.employee!=employee)
+            {
+                this.employee.removeOrderQualified(employee.getEmpNumber());
+                this.employee = employee;
+                employee.addOrderQualified(this);
+            }
+        }
+        else
+        {
+            this.employee = employee;
+            employee.addOrderQualified(this);
+        }
     }
+
 
     public static int getCounter() {
         return counter;
@@ -51,7 +67,27 @@ public class Order
         return order;
     }
 
-    public void setOrder(String order) {
+    public void setOrder(String order)
+    {
         this.order = order;
+    }
+    public String showOrder()
+    {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", dateOfPlacing=" + dateOfPlacing +
+                ", order='" + order + '\'' +
+                '}';
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", dateOfPlacing=" + dateOfPlacing +
+                ", order='" + order + '\'' +
+                ", employee=" + employee.showEmployee() +
+                '}';
     }
 }

@@ -44,9 +44,9 @@ public class Visit implements Serializable
             repairs.add(repair);
             repair.setVisit(this);
         }
-
     }
-//TODO: check private
+
+//TODO: check private, remove in Repair??
     public void removeRepair(Repair repair)
     {
         repairs.remove(repair);

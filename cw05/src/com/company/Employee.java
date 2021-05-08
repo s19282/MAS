@@ -25,19 +25,33 @@ public class Employee
             order.addEmployee(this);
         }
     }
-    public Order findOrderQualified(Integer id) throws Exception
+    public Order findOrderQualified(Integer id)
     {
         if(!ordersQualified.containsKey(id))
         {
-            throw new Exception("Order with id:" + id + " not found.");
+            try
+            {
+                throw new Exception("Order with id:" + id + " not found.");
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
         return ordersQualified.get(id);
     }
-    public void removeOrderQualified(Integer id) throws Exception
+    public void removeOrderQualified(Integer id)
     {
         if(!ordersQualified.containsKey(id))
         {
-            throw new Exception("Order with id:" + id + " not found.");
+            try
+            {
+                throw new Exception("Order with id:" + id + " not found.");
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
         ordersQualified.remove(id);
 //        TODO: more
@@ -65,5 +79,27 @@ public class Employee
 
     public void setEmpNumber(Integer empNumber) {
         this.empNumber = empNumber;
+    }
+    public String showEmployee()
+    {
+        return "Employee{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", empNumber=" + empNumber +
+                '}';
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder ordersString = new StringBuilder();
+        ordersQualified.forEach((k,v)-> ordersString.append(v.showOrder()));
+
+        return "Employee{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", empNumber=" + empNumber +
+                ", ordersQualified=" + ordersString +
+                '}';
     }
 }
