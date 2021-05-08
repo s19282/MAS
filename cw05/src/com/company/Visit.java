@@ -1,14 +1,9 @@
 package com.company;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Visit implements Serializable
 {
@@ -32,11 +27,6 @@ public class Visit implements Serializable
         this.estimatedCost = estimatedCost;
     }
 
-    public List<Repair> getRepairs()
-    {
-        return repairs;
-    }
-
     public void addRepair(Repair repair)
     {
         if(!repairs.contains(repair))
@@ -46,10 +36,19 @@ public class Visit implements Serializable
         }
     }
 
-//TODO: check private, remove in Repair??
+
     public void removeRepair(Repair repair)
     {
-        repairs.remove(repair);
+        if(repairs.contains(repair))
+        {
+            repairs.remove(repair);
+            repair.removeVisit();
+        }
+    }
+
+    public List<Repair> getRepairs()
+    {
+        return repairs;
     }
 
     public LocalDate getStartDate() {
@@ -94,7 +93,6 @@ public class Visit implements Serializable
         return cost;
     }
 
-
     public static Double getManHourCost() {
         return manHourCost;
     }
@@ -105,21 +103,22 @@ public class Visit implements Serializable
 
     public String showVisit()
     {
-        return "Visit\n\t{" + "\n" +
-                "\t\tstartDate=" + startDate + "\n" +
-                "\t\texpectedEndDate=" + expectedEndDate + "\n" +
-                "\t\tendDate=" + (getEndDate() != null ? getEndDate() : "End date not set") + "\n" +
-                "\t\testimatedCost=" + estimatedCost + "\n" +
-                "\t}";
+        return "Visit{" +
+                "startDate=" + startDate +
+                ", expectedEndDate=" + expectedEndDate +
+                ", endDate=" + (getEndDate() != null ? getEndDate() : "End date not set") +
+                ", estimatedCost=" + estimatedCost +
+                "}";
     }
     @Override
-    public String toString() {
-        return "Visit\n{" + "\n" +
-                "\tstartDate=" + startDate + "\n" +
-                "\texpectedEndDate=" + expectedEndDate + "\n" +
-                "\tendDate=" + (getEndDate() != null ? getEndDate() : "End date not set") + "\n" +
-                "\testimatedCost=" + estimatedCost + "\n" +
-                "\trepairs=" + repairs + "\n" +
+    public String toString()
+    {
+        return "Visit{" +
+                "startDate=" + startDate +
+                ", expectedEndDate=" + expectedEndDate +
+                ", endDate=" + (getEndDate() != null ? getEndDate() : "End date not set") +
+                ", estimatedCost=" + estimatedCost +
+                ", repairs=" + repairs +
                 '}';
     }
 }

@@ -8,26 +8,26 @@ public class Main
     public static void main(String[] args)
     {
 //	        "standard" association
-//        Visit v1 = new Visit(LocalDate.now(),LocalDate.now().plusDays(3),600D);
-//        Visit v2 = new Visit(LocalDate.now(),LocalDate.now().plusDays(19),3000D);
-//
-//        Repair r1 = new Repair(LocalTime.of(3,0),450D);
-//        Repair r2 = new Repair(LocalTime.of(2,3),560D);
-//        Repair r3 = new Repair(LocalTime.of(6,6),720D);
-//
-//        v1.addRepair(r1);
-//        v1.addRepair(r2);
-//        System.out.println(v1);
-//        System.out.println("-----------");
-//        System.out.println(r1.showRepair());
-//        System.out.println("-----------");
-//
-//        r3.setVisit(v2);
-//        System.out.println(r3.showRepair());
-//        System.out.println("-----------");
-//        System.out.println(v2);
-//
-//        System.out.println("===========");
+        Visit v1 = new Visit(LocalDate.now(),LocalDate.now().plusDays(3),600D);
+        Visit v2 = new Visit(LocalDate.now(),LocalDate.now().plusDays(19),3000D);
+
+        Repair r1 = new Repair(LocalTime.of(3,0),450D);
+        Repair r2 = new Repair(LocalTime.of(2,3),560D);
+        Repair r3 = new Repair(LocalTime.of(6,6),720D);
+
+        v1.addRepair(r1);
+        v1.addRepair(r2);
+        System.out.println(v1);
+        System.out.println("-----------");
+        System.out.println(r1.showRepair());
+        System.out.println("-----------");
+
+        r3.setVisit(v2);
+        System.out.println(r3.showRepair());
+        System.out.println("-----------");
+        System.out.println(v2);
+
+        System.out.println("===========");
 ////      association class
 //  TODO: change brands
 
@@ -67,14 +67,14 @@ public class Main
 //        System.out.println(order2);
 
 //        composition
-        System.out.println("===========");
-
-        Car car = new Car("Bmw","i8","automatic","4wd",2014);
-        Car.Engine engine1 = car.createEngine("15dwob","petrol", 231);
-        Car.Engine engine2 = car.createEngine("654fjh","electric", 131);
-
-        System.out.println(car);
-        System.out.println(engine1.showEngine());
+//        System.out.println("===========");
+//
+//        Car car = new Car("Bmw","i8","automatic","4wd",2014);
+//        Car.Engine engine1 = car.createEngine("15dwob","petrol", 231);
+//        Car.Engine engine2 = car.createEngine("654fjh","electric", 131);
+//
+//        System.out.println(car);
+//        System.out.println(engine1.showEngine());
 
     }
 }

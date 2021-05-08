@@ -27,17 +27,11 @@ public class Repair implements Serializable
         this.partsCost = partsCost;
     }
 
-
-
-    public Visit getVisit() {
-        return visit;
-    }
-
     public void setVisit(Visit visit)
     {
-        if(this.visit!=null)
+        if(this.visit != null)
         {
-            if(this.visit!=visit)
+            if(this.visit != visit)
             {
                 this.visit.removeRepair(this);
                 this.visit = visit;
@@ -49,6 +43,22 @@ public class Repair implements Serializable
             this.visit = visit;
             visit.addRepair(this);
         }
+    }
+
+    public void removeVisit()
+    {
+        if(visit.getRepairs().contains(this))
+            visit.removeRepair(this);
+
+        if(visit !=null)
+        {
+            visit = null;
+        }
+
+    }
+
+    public Visit getVisit() {
+        return visit;
     }
 
     public String getPartName() {
@@ -93,23 +103,24 @@ public class Repair implements Serializable
 
     public String showRepair()
     {
-        return "\nRepair\n{\n" +
-                "\tpartName='" + partName + '\n' +
-                "\tdescription='" + description + '\n' +
-                "\tduration=" + duration + '\n' +
-                "\tstate=" + state + '\n' +
-                "\tpartsCost=" + partsCost + '\n' +
-                "\tvisit=" + visit.showVisit() + '\n' +
-                "}";    }
+        return "Repair{" +
+                "partName=" + partName +
+                ", description=" + description +
+                ", duration=" + duration +
+                ", state=" + state +
+                ", partsCost=" + partsCost +
+                ", visit=" + (visit!=null ? visit.showVisit() : "null") +
+                "}";
+    }
 
     @Override
     public String toString() {
-        return "\n\tRepair\n\t{\n" +
-                "\t\tpartName='" + partName + '\n' +
-                "\t\tdescription='" + description + '\n' +
-                "\t\tduration=" + duration + '\n' +
-                "\t\tstate=" + state + '\n' +
-                "\t\tpartsCost=" + partsCost + '\n' +
-                "\t}";
+        return "Repair{" +
+                "partName=" + partName +
+                ", description=" + description +
+                ", duration=" + duration +
+                ", state=" + state +
+                ", partsCost=" + partsCost +
+                "}";
     }
 }
