@@ -8,7 +8,7 @@ public class Employee
     private String firstName;
     private String lastName;
     private Integer empNumber;
-    private Map<Integer,Order> ordersQualified = new TreeMap<>();
+    private final Map<Integer,Order> ordersQualified = new TreeMap<>();
 
 
     public Employee(String firstName, String lastName, Integer empNumber) {
@@ -53,6 +53,7 @@ public class Employee
                 e.printStackTrace();
             }
         }
+        ordersQualified.get(id).removeEmployee();
         ordersQualified.remove(id);
 //        TODO: more
     }
@@ -99,7 +100,7 @@ public class Employee
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", empNumber=" + empNumber +
-                ", ordersQualified=" + ordersString +
-                '}';
+                ", ordersQualified=[" + ordersString +
+                "]}";
     }
 }

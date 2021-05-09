@@ -29,41 +29,41 @@ public class Main
 //
 //        System.out.println("===========");
 ////      association class
-
-
-        Vehicle vehicle1 = new Vehicle("Suzuki", "GSX", "ABC 1234");
-        Vehicle vehicle2 = new Vehicle("Yamaha", "R1", "CBA 1234");
-
-        Client client1 = new Client("John", "Adams", 1234567);
-
-        Rent rent1 = new Rent(LocalDate.now().plusDays(1),LocalDate.now().plusDays(5), 50D,vehicle1,client1);
-        Rent rent2 = new Rent(LocalDate.now().plusDays(1),LocalDate.now().plusDays(5), 30D,vehicle1,client1);
-        Rent rent3 = new Rent(LocalDate.now().plusDays(1),LocalDate.now().plusDays(8), 70D,vehicle2,client1);
-
-        System.out.println(vehicle1);
-        System.out.println("-----------");
-
-        System.out.println(client1);
-        System.out.println("-----------");
-
-        System.out.println(rent1);
-        System.out.println("===========");
-//        todo check what happened after update
-//        qualified association
-//        Employee employee1 = new Employee("Helen","Hurt",1);
-//        Employee employee2 = new Employee("Leo", "Graham", 33);
 //
-//        Order order1 = new Order("Product1, Product2");
-//        Order order2 = new Order("Product3, Product5");
-//        employee1.addOrderQualified(order1);
 //
-//        System.out.println(employee1);
-//        System.out.println(order1);
+//        Vehicle vehicle1 = new Vehicle("Suzuki", "GSX", "ABC 1234");
+//        Vehicle vehicle2 = new Vehicle("Yamaha", "R1", "CBA 1234");
 //
+//        Client client1 = new Client("John", "Adams", 1234567);
+//
+//        Rent rent1 = new Rent(LocalDate.now().plusDays(1),LocalDate.now().plusDays(5), 50D,vehicle1,client1);
+//        Rent rent2 = new Rent(LocalDate.now().plusDays(1),LocalDate.now().plusDays(5), 30D,vehicle1,client1);
+//        Rent rent3 = new Rent(LocalDate.now().plusDays(1),LocalDate.now().plusDays(8), 70D,vehicle2,client1);
+//
+//        System.out.println(vehicle1);
 //        System.out.println("-----------");
-//        order2.addEmployee(employee2);
-//        System.out.println(employee2);
-//        System.out.println(order2);
+//
+//        System.out.println(client1);
+//        System.out.println("-----------");
+//
+//        System.out.println(rent1);
+//        System.out.println("===========");
+//        qualified association
+        Employee employee1 = new Employee("Helen","Hurt",1);
+        Employee employee2 = new Employee("Leo", "Graham", 33);
+
+        Order order1 = new Order("Product1, Product2");
+        Order order2 = new Order("Product3, Product5");
+
+        employee1.addOrderQualified(order1);
+        System.out.println(employee1);
+        System.out.println(order1);
+
+        System.out.println("-----------");
+
+        order2.addEmployee(employee2);
+        System.out.println(employee2);
+        System.out.println(order2);
 
 //        composition
 //        System.out.println("===========");

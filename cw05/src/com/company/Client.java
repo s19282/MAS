@@ -8,7 +8,7 @@ public class Client
     private String firstName;
     private String lastName;
     private int phoneNumber;
-    private List<Rent> rents = new ArrayList<>();
+    private final List<Rent> rents = new ArrayList<>();
 
     public Client(String firstName, String lastName, int phoneNumber)
     {

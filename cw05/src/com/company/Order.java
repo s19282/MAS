@@ -38,6 +38,16 @@ public class Order
         }
     }
 
+    public void removeEmployee()
+    {
+        if(employee != null)
+        {
+            Employee tmp = employee;
+            employee = null;
+            tmp.removeOrderQualified(getOrderId());
+        }
+    }
+
 
     public static int getCounter() {
         return counter;
@@ -76,7 +86,7 @@ public class Order
         return "Order{" +
                 "orderId=" + orderId +
                 ", dateOfPlacing=" + dateOfPlacing +
-                ", order='" + order + '\'' +
+                ", order=" + order + '\'' +
                 '}';
     }
 
@@ -86,8 +96,8 @@ public class Order
         return "Order{" +
                 "orderId=" + orderId +
                 ", dateOfPlacing=" + dateOfPlacing +
-                ", order='" + order + '\'' +
-                ", employee=" + employee.showEmployee() +
+                ", order=" + order + '\'' +
+                ", employee=" + (employee != null ? employee.showEmployee() : "null") +
                 '}';
     }
 }
