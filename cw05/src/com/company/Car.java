@@ -24,8 +24,12 @@ public class Car
     {
         Engine engine = new Engine(codeName,type,horsePower);
         engines.add(engine);
-
         return engine;
+    }
+
+    public void removeEngine(Engine engine)
+    {
+        engines.remove(engine);
     }
 
     public String getMake() {
@@ -70,8 +74,6 @@ public class Car
 
     @Override
     public String toString() {
-//        StringBuilder enginesString = new StringBuilder();
-//        for (Engine engine : engines) enginesString.append(engine);
         return "Car{" +
                 "Make='" + Make + '\'' +
                 ", Model='" + Model + '\'' +
