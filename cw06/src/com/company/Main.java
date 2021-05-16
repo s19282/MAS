@@ -40,6 +40,16 @@ public class Main {
         System.out.println(landWindPoweredVehicle);
         System.out.println(waterEnginePoweredVehicle);
         System.out.println(waterWindPoweredVehicle);
+
+        try
+        {
+            landEnginePoweredVehicle.startEngine();
+            landWindPoweredVehicle.startEngine();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
         System.out.println("=====================");
 //      dynamic inheritance
         Employee employee = new Employee("Ronald","Gardener",LocalDate.now().minusYears(30),Position.MECHANIC,"engines");

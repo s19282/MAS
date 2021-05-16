@@ -73,7 +73,9 @@ public abstract class Vehicle
         {
             this.sailSpan = sailSpan;
         }
-        throw new Exception("This vehicle is not wind-powered");
+        else {
+            throw new Exception("This vehicle is not wind-powered");
+        }
     }
 
     public int getEngineCapacity() throws Exception {
@@ -89,7 +91,31 @@ public abstract class Vehicle
         {
             this.engineCapacity = engineCapacity;
         }
-        throw new Exception("This vehicle is not engine-powered");
+        else
+        {
+            throw new Exception("This vehicle is not engine-powered");
+        }
+    }
+
+    public void startEngine() throws Exception {
+        if(getDrive()==VehicleType.ENGINE_POWERED)
+        {
+            System.out.println("Engine started!");
+        }
+        else
+        {
+            throw new Exception("This vehicle is not engine-powered");
+        }
+    }
+    public void setSail() throws Exception {
+        if(getDrive()==VehicleType.WIND_POWERED)
+        {
+            System.out.println("Sail set!");
+        }
+        else
+        {
+            throw new Exception("This vehicle is not wind-powered");
+        }
     }
 
     @Override
