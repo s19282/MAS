@@ -26,6 +26,18 @@ public class Main {
         System.out.println(taxiAndLorryDriver);
         System.out.println("=====================");
 //      multi-inheritance
+        System.out.println("=====================");
+//      multi-aspect inheritance
+        Vehicle landEnginePoweredVehicle = new LandVehicle("toyota","hilux",2010,VehicleType.ENGINE_POWERED,3000,4);
+        Vehicle landWindPoweredVehicle = new LandVehicle("bike","with sail",2020,VehicleType.WIND_POWERED,2d,3);
+        Vehicle waterEnginePoweredVehicle = new WaterVehicle("kawasaki","stx-15f",2011,VehicleType.ENGINE_POWERED,500,400);
+        Vehicle waterWindPoweredVehicle = new WaterVehicle("Fusion","msv",2021,VehicleType.WIND_POWERED,5D,700);
+
+        System.out.println(landEnginePoweredVehicle);
+        System.out.println(landWindPoweredVehicle);
+        System.out.println(waterEnginePoweredVehicle);
+        System.out.println(waterWindPoweredVehicle);
+        System.out.println("=====================");
 
     }
 }
