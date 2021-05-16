@@ -17,7 +17,7 @@ public class Driver
     private int taximeterNumber;
 
     private final EnumSet<DriverType> driverTypes = EnumSet.of(DriverType.DRIVER);
-
+//    TODO: add method
     public Driver(String firstName, String lastName, int drivingLicenceNumber, LocalDate dateOfObtain)
     {
         this.firstName = firstName;

@@ -25,5 +25,7 @@ public class Main {
         System.out.println(taxiDriver);
         System.out.println(taxiAndLorryDriver);
         System.out.println("=====================");
+//      multi-inheritance
+
     }
 }
