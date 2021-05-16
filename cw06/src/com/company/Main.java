@@ -38,6 +38,12 @@ public class Main {
         System.out.println(waterEnginePoweredVehicle);
         System.out.println(waterWindPoweredVehicle);
         System.out.println("=====================");
-
+//      dynamic inheritance
+        Employee employee = new Employee("Ronald","Gardener",LocalDate.now().minusYears(30),Position.MECHANIC,"engines");
+        System.out.println(employee);
+//        employee.setPosition(Position.PAINTER,"transmissions");
+//        employee.setPosition(Position.MECHANIC,"engines");
+        employee.setPosition(Position.PAINTER,500f);
+        System.out.println(employee);
     }
 }
