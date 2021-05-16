@@ -3,10 +3,14 @@ package com.company;
 public class Amphibian extends Car implements Swimmable
 {
     private int maxSpeed;
+    private int displacement;
+    private int numberOfSeats;
 
-    public Amphibian(String make, String model, int numberOfWheels, int maxSpeed) {
+    public Amphibian(String make, String model, int numberOfWheels, int maxSpeed, int displacement, int numberOfSeats) {
         super(make, model, numberOfWheels);
-        this.maxSpeed = maxSpeed;
+        setMaxSpeed(maxSpeed);
+        setDisplacement(displacement);
+        setNumberOfSeats(numberOfSeats);
     }
 
     public int getMaxSpeed() {
@@ -18,22 +22,32 @@ public class Amphibian extends Car implements Swimmable
     }
 
     @Override
-    public void setMake() {
-
+    public int getNumberOfSeats() {
+        return numberOfSeats;
     }
 
     @Override
-    public void setModel() {
-
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
     }
 
     @Override
     public int getDisplacement() {
-        return 0;
+        return displacement;
     }
 
     @Override
-    public void setDisplacement() {
+    public void setDisplacement(int displacement) {
+        this.displacement = displacement;
+    }
 
+    @Override
+    public String toString() {
+        return "Amphibian{" +
+                "maxSpeed=" + maxSpeed +
+                ", displacement=" + displacement +
+                ", numberOfSeats=" + numberOfSeats +
+                super.toString() +
+                '}';
     }
 }

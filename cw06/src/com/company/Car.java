@@ -36,4 +36,11 @@ public class Car
     public void setNumberOfWheels(int numberOfWheels) {
         this.numberOfWheels = numberOfWheels;
     }
+
+    @Override
+    public String toString() {
+        return  ", make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", numberOfWheels=" + numberOfWheels;
+    }
 }

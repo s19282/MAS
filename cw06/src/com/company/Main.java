@@ -26,6 +26,9 @@ public class Main {
         System.out.println(taxiAndLorryDriver);
         System.out.println("=====================");
 //      multi-inheritance
+        Amphibian amphibian = new Amphibian("LUAZ","969",4,30,1000,6);
+        System.out.println(amphibian);
+
         System.out.println("=====================");
 //      multi-aspect inheritance
         Vehicle landEnginePoweredVehicle = new LandVehicle("toyota","hilux",2010,VehicleType.ENGINE_POWERED,3000,4);
