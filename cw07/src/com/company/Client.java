@@ -76,10 +76,10 @@ public class Client
     @Override
     public String toString() {
         return "Client{" +
-                "clientId=" + clientId +
-                ", discount=" + discount +
-                ", name='" + name + '\'' +
-                ", moneySpend=" + moneySpend +
+                "clientId=" + getClientId() +
+                ", discount=" + getDiscount() +
+                ", name='" + getName() + '\'' +
+                ", moneySpend=" + getMoneySpend() +
                 '}';
     }
 }
