@@ -13,7 +13,7 @@ public class Vehicle
 
     public Vehicle(String make, String model, String VIN) throws Exception {
         setMake(make);
-        setMake(make);
+        setModel(model);
         setVIN(VIN);
     }
 

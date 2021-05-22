@@ -31,6 +31,22 @@ public class Main {
             e.printStackTrace();
         }
         System.out.println("================");
+//      subset
+        System.out.println("================");
+//      ordered
+        Employee e1 = new Employee("Fred","Rodgers",43);
+        Employee e2 = new Employee("Naomi","Miller",2);
+        Order o1 = new Order("Pizza");
+
+        e1.addOrder(o1);
+        System.out.println(e1);
+        System.out.println(o1);
+        System.out.println("----------------");
+        o1.addEmployee(e2);
+        System.out.println(e1);
+        System.out.println(o1);
+
+        System.out.println("================");
 
     }
 }
