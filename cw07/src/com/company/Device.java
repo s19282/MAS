@@ -12,9 +12,9 @@ public class Device {
     private final List<Sensor> criticalSensors = new ArrayList<>();
 
     public Device(String make, String mode, double price) {
-        this.make = make;
-        this.mode = mode;
-        this.price = price;
+        setMake(make);
+        setMode(mode);
+        setPrice(price);
     }
 
     public void addSensor(Sensor sensor) {
@@ -32,7 +32,7 @@ public class Device {
     }
 
     public void addCriticalSensor(Sensor sensor) throws Exception {
-        if (!sensors.contains(sensor) || sensor.getDevice() == null) {
+        if (!sensors.contains(sensor) || sensor.getDevice() == null || sensor.getDevice() != this) {
             throw new Exception("Add Sensor before you set it critical!");
         } else {
             if (!criticalSensors.contains(sensor)) {
@@ -83,9 +83,9 @@ public class Device {
 
     public String showDevice() {
         return "Device{" +
-                "make='" + make + '\'' +
-                ", mode='" + mode + '\'' +
-                ", price='" + price + '\'' +
+                "make='" + getMake() + '\'' +
+                ", mode='" + getMode() + '\'' +
+                ", price='" + getPrice() + '\'' +
                 '}';
     }
 
@@ -97,9 +97,9 @@ public class Device {
         criticalSensors.forEach(i->sb2.append(i.showSensor()));
 
         return "Device{" +
-                "make='" + make + '\'' +
-                ", mode='" + mode + '\'' +
-                ", price='" + price + '\'' +
+                "make='" + getMake() + '\'' +
+                ", mode='" + getMode() + '\'' +
+                ", price='" + getPrice() + '\'' +
                 ", sensors=" + sb +
                 ", criticalSensors=" + sb2 +
                 '}';

@@ -12,9 +12,9 @@ public class Person
     private final List<Sponsor> sponsors = new ArrayList<>();
 
     public Person(String firstName, String lastName, int phoneNumber) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setPhoneNumber(phoneNumber);
     }
 
     public void sponsor(Sponsor sponsor) throws Exception {
@@ -64,9 +64,9 @@ public class Person
     public String showPerson()
     {
         return "Person{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phoneNumber=" + phoneNumber +
+                "firstName='" + getFirstName() + '\'' +
+                ", lastName='" + getLastName() + '\'' +
+                ", phoneNumber=" + getPhoneNumber() +
                 '}';
     }
 
@@ -75,9 +75,9 @@ public class Person
         StringBuilder sb = new StringBuilder();
         sponsors.forEach(i->sb.append(i.showSponsor()));
         return "Person{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phoneNumber=" + phoneNumber +
+                "firstName='" + getFirstName() + '\'' +
+                ", lastName='" + getLastName() + '\'' +
+                ", phoneNumber=" + getPhoneNumber() +
                 ", sponsors=" + sb +
                 '}';
     }

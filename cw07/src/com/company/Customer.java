@@ -12,9 +12,9 @@ public class Customer
 
     public Customer(String firstName, String lastName, int phoneNumber)
     {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setPhoneNumber(phoneNumber);
     }
 
     public List<Rent> getRents() {
@@ -65,9 +65,9 @@ public class Customer
     public String showCustomer()
     {
         return "Customer{" +
-                "firstName='" + firstName +
-                ", lastName='" + lastName +
-                ", phoneNumber=" + phoneNumber +
+                "firstName='" + getFirstName() +
+                ", lastName='" + getLastName() +
+                ", phoneNumber=" + getPhoneNumber() +
                 "}";
     }
 
@@ -77,9 +77,9 @@ public class Customer
         for (Rent rent : rents) rentsString.append(rent.showCarOnly());
 
         return "Customer{" +
-                "firstName=" + firstName +
-                ", lastName=" + lastName +
-                ", phoneNumber=" + phoneNumber +
+                "firstName=" + getFirstName() +
+                ", lastName=" + getLastName() +
+                ", phoneNumber=" + getPhoneNumber() +
                 ", rents=[" + rentsString +
                 "}";
     }

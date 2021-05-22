@@ -9,8 +9,8 @@ public class Sensor
     private Device deviceSubset;
 
     public Sensor(String name, String serialNumber) {
-        this.name = name;
-        this.serialNumber = serialNumber;
+        setName(name);
+        setSerialNumber(serialNumber);
     }
 
     public void setDevice(Device device)
@@ -98,15 +98,15 @@ public class Sensor
     public String showSensor()
     {
         return "Sensor{" +
-                "name='" + name + '\'' +
-                ", serialNumber='" + serialNumber + '\'' +
+                "name='" + getName() + '\'' +
+                ", serialNumber='" + getSerialNumber() + '\'' +
                 '}';
     }
     @Override
     public String toString() {
         return "Sensor{" +
-                "name='" + name + '\'' +
-                ", serialNumber='" + serialNumber + '\'' +
+                "name='" + getName() + '\'' +
+                ", serialNumber='" + getSerialNumber() + '\'' +
                 ", device=" + (device != null ? device.showDevice() : "") +
                 ", deviceSubset=" + (deviceSubset != null ? deviceSubset.showDevice() : "") +
                 '}';

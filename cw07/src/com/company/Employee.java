@@ -11,9 +11,9 @@ public class Employee
     private final List<Order> orders = new ArrayList<>();
 
     public Employee(String firstName, String lastName, long empNumber) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.empNumber = empNumber;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmpNumber(empNumber);
     }
 
     public void addOrder(Order order)
@@ -59,9 +59,9 @@ public class Employee
 
     public String showEmployee() {
         return "Employee{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", empNumber=" + empNumber +
+                "firstName='" + getFirstName() + '\'' +
+                ", lastName='" + getLastName() + '\'' +
+                ", empNumber=" + getEmpNumber() +
                 '}';
     }
 
@@ -70,9 +70,9 @@ public class Employee
         StringBuilder sb = new StringBuilder();
         orders.forEach(i->sb.append(i.showOrder()));
         return "Employee{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", empNumber=" + empNumber +
+                "firstName='" + getFirstName() + '\'' +
+                ", lastName='" + getLastName() + '\'' +
+                ", empNumber=" + getEmpNumber() +
                 ", orders=" + sb +
                 '}';
     }

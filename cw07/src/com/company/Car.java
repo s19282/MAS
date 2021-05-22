@@ -12,9 +12,9 @@ public class Car
 
     public Car(String make, String model, String licencePlateNumber)
     {
-        this.make = make;
-        this.model = model;
-        this.licencePlateNumber = licencePlateNumber;
+        setMake(make);
+        setModel(model);
+        setLicencePlateNumber(licencePlateNumber);
     }
 
     public String getMake() {
@@ -65,9 +65,9 @@ public class Car
     public String showCar()
     {
         return "Car{" +
-                "make='" + make +
-                ", model='" + model +
-                ", licencePlateNumber='" + licencePlateNumber +
+                "make='" + getMake() +
+                ", model='" + getModel() +
+                ", licencePlateNumber='" + getLicencePlateNumber() +
                 "}";
     }
 
@@ -77,9 +77,9 @@ public class Car
         for (Rent rent : rents) rentsString.append(rent.showCustomerOnly());
 
         return "Car{" +
-                "make='" + make +
-                ", model='" + model +
-                ", licencePlateNumber='" + licencePlateNumber +
+                "make='" + getMake() +
+                ", model='" + getModel() +
+                ", licencePlateNumber='" + getLicencePlateNumber() +
                 ", rents=[" + rentsString +
                 "}";
     }

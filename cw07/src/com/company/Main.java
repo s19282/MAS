@@ -41,7 +41,7 @@ public class Main {
         try {
             sensor.setDeviceSubset(device);
 //            device.removeSensor(sensor);
-//            sensor.setDeviceSubset(device);
+//            device.addCriticalSensor(sensor);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,7 +102,5 @@ public class Main {
         }
 
         System.out.println("================");
-
     }
-
 }

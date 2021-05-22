@@ -48,9 +48,9 @@ public class CarPart
     @Override
     public String toString() {
         return "CarPart{" +
-                "name='" + name + '\'' +
-                ", price=" + price +
-                ", serialNumber='" + serialNumber + '\'' +
+                "name='" + getName() + '\'' +
+                ", price=" + getPrice() +
+                ", serialNumber='" + getSerialNumber() + '\'' +
                 '}';
     }
 }

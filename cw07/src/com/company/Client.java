@@ -11,7 +11,7 @@ public class Client
 
     public Client(String name)
     {
-        this.name = name;
+        setName(name);
         clientId = counter++;
     }
 

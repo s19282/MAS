@@ -8,8 +8,8 @@ public class Sponsor {
     private Company company;
 
     public Sponsor(String goal, Double amount) {
-        this.goal = goal;
-        this.amount = amount;
+        setGoal(goal);
+        setAmount(amount);
     }
 
     public void setSponsor(Person person) throws Exception {
@@ -85,16 +85,16 @@ public class Sponsor {
 
     public String showSponsor() {
         return "Sponsor{" +
-                "goal='" + goal + '\'' +
-                ", amount=" + amount +
+                "goal='" + getGoal() + '\'' +
+                ", amount=" + getAmount() +
                 '}';
     }
 
     @Override
     public String toString() {
         return "Sponsor{" +
-                "goal='" + goal + '\'' +
-                ", amount=" + amount +
+                "goal='" + getGoal() + '\'' +
+                ", amount=" + getAmount() +
                 ", person=" + (person == null ? "" : person.showPerson()) +
                 ", company=" + (company == null ? "" : company.showCompany()) +
                 '}';

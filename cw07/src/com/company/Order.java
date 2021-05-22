@@ -14,7 +14,7 @@ public class Order
     private final List<Employee> employees = new ArrayList<>();
 
     public Order(String order) {
-        this.order = order;
+        setOrder(order);
         dateOfPlacing = LocalDate.now();
         orderId = counter++;
     }
@@ -56,9 +56,9 @@ public class Order
     public String showOrder()
     {
         return "Order{" +
-                "orderId=" + orderId +
-                ", dateOfPlacing=" + dateOfPlacing +
-                ", order='" + order + '\'' +
+                "orderId=" + getOrderId() +
+                ", dateOfPlacing=" + getDateOfPlacing() +
+                ", order='" + getOrder() + '\'' +
                 '}';
     }
     @Override
@@ -66,9 +66,9 @@ public class Order
         StringBuilder sb = new StringBuilder();
         employees.forEach(i->sb.append(i.showEmployee()));
         return "Order{" +
-                "orderId=" + orderId +
-                ", dateOfPlacing=" + dateOfPlacing +
-                ", order='" + order + '\'' +
+                "orderId=" + getOrderId() +
+                ", dateOfPlacing=" + getDateOfPlacing() +
+                ", order='" + getOrder() + '\'' +
                 ", employees=" + sb +
                 '}';
     }

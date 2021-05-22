@@ -12,9 +12,9 @@ public class Rent
 
     public Rent(LocalDate dateSince, LocalDate dateTo, Double hourlyRate, Car car, Customer customer)
     {
-        this.dateSince = dateSince;
-        this.dateTo = dateTo;
-        this.hourlyRate = hourlyRate;
+        setDateSince(dateSince);
+        setDateTo(dateTo);
+        setHourlyRate(hourlyRate);
         setCar(car);
         setCustomer(customer);
     }
@@ -98,18 +98,18 @@ public class Rent
     public String showCarOnly()
     {
         return "Rent{" +
-                "dateSince=" + dateSince +
-                ", dateTo=" + dateTo +
-                ", hourlyRate=" + hourlyRate +
+                "dateSince=" + getDateSince() +
+                ", dateTo=" + getDateTo() +
+                ", hourlyRate=" + getHourlyRate() +
                 ", car=" + car.showCar() +
                 "}";
     }
     public String showCustomerOnly()
     {
         return "Rent{" +
-                "dateSince=" + dateSince +
-                ", dateTo=" + dateTo +
-                ", hourlyRate=" + hourlyRate +
+                "dateSince=" + getDateSince() +
+                ", dateTo=" + getDateTo() +
+                ", hourlyRate=" + getHourlyRate() +
                 ", customer=" + customer.showCustomer() +
                 "}";
     }

@@ -12,15 +12,14 @@ public class Company
     private final List<Sponsor> sponsors = new ArrayList<>();
 
     public Company(String name, int REGON, int phoneNumber) {
-        this.name = name;
-        this.REGON = REGON;
-        this.phoneNumber = phoneNumber;
+        setName(name);
+        setREGON(REGON);
+        setPhoneNumber(phoneNumber);
     }
 
     public void sponsor(Sponsor sponsor) throws Exception {
         if(!sponsors.contains(sponsor))
         {
-//            throw new Exception("Sponsor is assigned already!");
             sponsors.add(sponsor);
             sponsor.setSponsor(this);
         }
@@ -65,9 +64,9 @@ public class Company
     public String showCompany()
     {
         return "Company{" +
-                "name='" + name + '\'' +
-                ", REGON=" + REGON +
-                ", phoneNumber=" + phoneNumber +
+                "name='" + getName() + '\'' +
+                ", REGON=" + getREGON() +
+                ", phoneNumber=" + getPhoneNumber() +
                 '}';
     }
 
@@ -77,9 +76,9 @@ public class Company
         sponsors.forEach(i->sb.append(i.showSponsor()));
 
         return "Company{" +
-                "name='" + name + '\'' +
-                ", REGON=" + REGON +
-                ", phoneNumber=" + phoneNumber +
+                "name='" + getName() + '\'' +
+                ", REGON=" + getREGON() +
+                ", phoneNumber=" + getPhoneNumber() +
                 ", sponsors=" + sb +
                 '}';
     }
