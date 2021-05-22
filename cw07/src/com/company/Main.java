@@ -75,9 +75,20 @@ public class Main {
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         System.out.println("================");
+//      own
+        try {
+            CarPart carPart = new CarPart("Driveshaft",1000D,"BPG-23432");
+            System.out.println(carPart);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("================");
+
     }
+
 }

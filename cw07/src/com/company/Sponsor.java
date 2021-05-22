@@ -14,6 +14,7 @@ public class Sponsor {
 
     public void setSponsor(Person person) throws Exception {
         if (company != null) {
+            person.removeSponsor(this);
             throw new Exception("Sponsor is assigned already!");
         } else {
             if (this.person != null) {
@@ -31,6 +32,7 @@ public class Sponsor {
 
     public void setSponsor(Company company) throws Exception {
         if (person != null) {
+            company.removeSponsor(this);
             throw new Exception("Sponsor is assigned already!");
         } else {
             if (this.company != null) {
