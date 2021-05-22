@@ -1,5 +1,7 @@
 package com.company;
 
+import java.time.LocalDate;
+
 public class Main {
 
     public static void main(String[] args)
@@ -47,6 +49,16 @@ public class Main {
         System.out.println(o1);
 
         System.out.println("================");
+//      bag
+        Car car = new Car("Mazda","3","CBA 01234");
+        Customer customer = new Customer("Franklin","White",547123764);
+        Rent rent = new Rent(LocalDate.now().plusDays(4),LocalDate.now().plusDays(10),40D,car,customer);
+        Rent rent2 = new Rent(LocalDate.now().plusDays(11),LocalDate.now().plusDays(21),40D,car,customer);
 
+        System.out.println(car);
+        System.out.println(rent);
+        System.out.println(rent2);
+        System.out.println(customer);
+//
     }
 }
