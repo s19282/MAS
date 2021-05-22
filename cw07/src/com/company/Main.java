@@ -59,6 +59,25 @@ public class Main {
         System.out.println(rent);
         System.out.println(rent2);
         System.out.println(customer);
-//
+
+        System.out.println("================");
+//      xor
+        Sponsor sponsor = new Sponsor("Charity",10000D);
+        Person person = new Person("Leo","Seward",123654789);
+        Company company = new Company("IBM",1234567765,443434333);
+
+        try
+        {
+            company.sponsor(sponsor);
+//            person.sponsor(sponsor);
+            System.out.println(company);
+            System.out.println(sponsor);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        System.out.println("================");
     }
 }
