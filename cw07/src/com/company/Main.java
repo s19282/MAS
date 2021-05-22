@@ -34,6 +34,20 @@ public class Main {
         }
         System.out.println("================");
 //      subset
+        Sensor sensor = new Sensor("wind","dc4rg00");
+        Device device = new Device("DJI","Air2s",1000D);
+
+        sensor.setDevice(device);
+        try {
+            sensor.setDeviceSubset(device);
+//            device.removeSensor(sensor);
+//            sensor.setDeviceSubset(device);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(sensor);
+        System.out.println(device);
+
         System.out.println("================");
 //      ordered
         Employee e1 = new Employee("Fred","Rodgers",43);
