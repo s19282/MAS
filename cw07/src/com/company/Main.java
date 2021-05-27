@@ -25,8 +25,9 @@ public class Main {
         try
         {
             Vehicle v = new Vehicle("Mazda","3","JMZBK12Z24111111");
-            System.out.println(v);
+            System.out.println(Vehicle.findByVIN("JMZBK12Z24111111"));
 //            Vehicle v2 = new Vehicle("Mazda","3","JMZBK12Z24111111");
+//            System.out.println(v);
         }
         catch (Exception e)
         {
@@ -37,11 +38,11 @@ public class Main {
         Sensor sensor = new Sensor("wind","dc4rg00");
         Device device = new Device("DJI","Air2s",1000D);
 
-        sensor.setDevice(device);
+//        sensor.setDevice(device);
         try {
-            sensor.setDeviceSubset(device);
+//            sensor.setDeviceSubset(device);
 //            device.removeSensor(sensor);
-//            device.addCriticalSensor(sensor);
+            device.addCriticalSensor(sensor);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -45,6 +45,10 @@ public class Vehicle
         this.VIN = VIN;
         map.put(getVIN(),this);
     }
+    public static Vehicle findByVIN(String VIN)
+    {
+        return map.get(VIN);
+    }
     public void removeVehicle(String VIN)
     {
         map.remove(VIN);
