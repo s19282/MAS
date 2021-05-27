@@ -1,21 +1,32 @@
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.EnumSet;
 import java.util.Set;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Driver
 {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "increment",strategy = "increment")
     private Long id;
+    @Basic
     private String firstName;
+    @Basic
     private String lastName;
+    @Basic
     private int drivingLicenceNumber;
+    @Basic
     private LocalDate dateOfObtain;
 
+    @Basic
     private int commercialDrivingLicenceNumber;
+    @Basic
     private int taxiLicenceNumber;
+    @Basic
     private int taximeterNumber;
 
     @ElementCollection

@@ -1,19 +1,24 @@
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalTime;
 @Entity
 public class Repair implements Serializable
 {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "increment",strategy = "increment")
     private Long id;
+    @Basic
     private String partName;
+    @Basic
     private String description;
+    @Basic
     private LocalTime duration;
+    @Basic
     private RepairState state;
+    @Basic
     private Double partsCost;
     @ManyToOne
     private Visit visit;

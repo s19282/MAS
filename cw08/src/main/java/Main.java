@@ -4,6 +4,10 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -35,8 +39,23 @@ public class Main
 //            vehicle.setEngineCapacity(3000);
 //            session.update(vehicle);
 //            session.delete(vehicle);
+            session.getTransaction().commit();
 
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+
+            CriteriaQuery<Vehicle> criteria = builder.createQuery( Vehicle.class );
+            Root<Vehicle> root = criteria.from( Vehicle.class );
+            criteria.select( root );
+//            criteria.where( builder.equal( root.get( "year" ), 2014 ) );
+            List<Vehicle> vehiclesFromDb = session.createQuery( criteria ).getResultList();
+
+            for(Vehicle v : vehiclesFromDb)
+            {
+                System.out.println(v);
+            }
 //=================Association==================
+            session.beginTransaction();
             Repair r1 = new Repair("def544fk","intake manifold replacement", LocalTime.of(1,0),RepairState.WAITING,1000D);
             Repair r2 = new Repair("def544fk","exhaust replacement", LocalTime.of(1,40),RepairState.IN_PROGRESS,1340D);
             Visit visit = new Visit(LocalDate.now(),LocalDate.now().plusDays(3),3000D);
@@ -45,9 +64,16 @@ public class Main
 
             session.save(r1);
             session.save(r2);
+//            r1.setDescription("intake manifold fix");
+//            session.update(r1);
+//            r2.removeVisit();
+//            session.delete(r2);
             session.save(visit);
+//            session.remove(visit);
+            session.getTransaction().commit();
 
 //=================Inheritance==================
+            session.beginTransaction();
             Driver driver = new Driver("Alan","Vicknair",1212, LocalDate.now().minusYears(3));
             Driver lorryDriver = new Driver("Tod", "Hone", 35334, LocalDate.now().minusYears(2),54643);
             Driver taxiDriver = new Driver("Troy","Thompson",34343,LocalDate.now().minusYears(5),33232,534545);
@@ -57,13 +83,9 @@ public class Main
             session.save(taxiDriver);
             session.save(taxiAndLorryDriver);
 
-            session.getTransaction().commit();
-            List<Vehicle> vehiclesFromDB = session.createQuery("from Vehicle").list();
-            for(Vehicle vehicle_ : vehiclesFromDB)
-            {
-                System.out.println(vehicle_);
-            }
+//            session.remove(taxiAndLorryDriver);
 
+            session.getTransaction().commit();
 
             session.close();
         }

@@ -1,12 +1,13 @@
-import javax.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
-enum FuelType {PETROL,DIESEL}
+import javax.persistence.*;
 
 @Entity(name = "Vehicle")
 public class Vehicle
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "increment",strategy = "increment")
     private Long id;
     @Basic
     private String make;

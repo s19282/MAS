@@ -1,3 +1,5 @@
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -7,20 +9,24 @@ import java.util.List;
 @Entity(name = "Visit")
 public class Visit implements Serializable
 {
-//    TODO: numeration
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "increment",strategy = "increment")
     private Long id;
+    @Basic
     private LocalDate startDate;
+    @Basic
     private LocalDate expectedEndDate;
+    @Basic
     private LocalDate endDate;
+    @Basic
     private Double estimatedCost;
     @OneToMany(
             mappedBy = "visit",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Repair> repairs = new ArrayList<>();
+    private final List<Repair> repairs = new ArrayList<>();
     private static Double manHourCost = 200D;
 
     public Visit(LocalDate startDate, LocalDate expectedEndDate, LocalDate endDate, Double estimatedCost) {
