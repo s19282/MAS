@@ -1,7 +1,10 @@
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Visit implements Serializable
 {
@@ -9,8 +12,9 @@ public class Visit implements Serializable
     private LocalDate expectedEndDate;
     private LocalDate endDate;
     private Double estimatedCost;
-    private List<Repair> repairs = new ArrayList<>();
+    private final List<Repair> repairs = new ArrayList<>();
     private static Double manHourCost = 200D;
+    private Long id;
 
     public Visit(LocalDate startDate, LocalDate expectedEndDate, LocalDate endDate, Double estimatedCost) {
         this.startDate = startDate;
@@ -118,5 +122,14 @@ public class Visit implements Serializable
                 ", estimatedCost=" + estimatedCost +
                 ", repairs=" + repairs +
                 '}';
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Id
+    public Long getId() {
+        return id;
     }
 }
