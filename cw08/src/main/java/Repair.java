@@ -16,7 +16,7 @@ public class Repair implements Serializable
     private String description;
     @Basic
     private LocalTime duration;
-    @Basic
+    @Enumerated(EnumType.STRING)
     private RepairState state;
     @Basic
     private Double partsCost;

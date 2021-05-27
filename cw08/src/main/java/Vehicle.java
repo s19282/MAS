@@ -15,7 +15,7 @@ public class Vehicle
     private String model;
     @Basic
     private int engineCapacity;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private FuelType fuelType;
     @Basic
     private int year;

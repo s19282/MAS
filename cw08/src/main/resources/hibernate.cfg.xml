@@ -19,5 +19,7 @@
 		<mapping class="Repair"/>
 		<mapping class="Visit"/>
 		<mapping class="Driver"/>
+		<mapping class="LorryDriver"/>
+		<mapping class="TaxiDriver"/>
 	</session-factory>
 </hibernate-configuration>

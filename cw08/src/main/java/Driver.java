@@ -2,8 +2,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.EnumSet;
-import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -22,17 +20,6 @@ public class Driver
     @Basic
     private LocalDate dateOfObtain;
 
-    @Basic
-    private int commercialDrivingLicenceNumber;
-    @Basic
-    private int taxiLicenceNumber;
-    @Basic
-    private int taximeterNumber;
-
-    @ElementCollection
-    @Enumerated(EnumType.STRING)
-    private final Set<DriverType> driverTypes = EnumSet.of(DriverType.DRIVER);
-
     public Driver(String firstName, String lastName, int drivingLicenceNumber, LocalDate dateOfObtain)
     {
         this.firstName = firstName;
@@ -41,87 +28,9 @@ public class Driver
         this.dateOfObtain = dateOfObtain;
     }
 
-    public Driver(String firstName, String lastName, int drivingLicenceNumber, LocalDate dateOfObtain, int commercialDrivingLicenceNumber, int taxiLicenceNumber, int taximeterNumber) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.drivingLicenceNumber = drivingLicenceNumber;
-        this.dateOfObtain = dateOfObtain;
-        this.commercialDrivingLicenceNumber = commercialDrivingLicenceNumber;
-        this.taxiLicenceNumber = taxiLicenceNumber;
-        this.taximeterNumber = taximeterNumber;
-        driverTypes.add(DriverType.TAXI_DRIVER);
-        driverTypes.add(DriverType.LORRY_DRIVER);
-    }
-
-    public Driver(String firstName, String lastName, int drivingLicenceNumber, LocalDate dateOfObtain, int commercialDrivingLicenceNumber) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.drivingLicenceNumber = drivingLicenceNumber;
-        this.dateOfObtain = dateOfObtain;
-        this.commercialDrivingLicenceNumber = commercialDrivingLicenceNumber;
-        driverTypes.add(DriverType.LORRY_DRIVER);
-    }
-
-    public Driver(String firstName, String lastName, int drivingLicenceNumber, LocalDate dateOfObtain, int taxiLicenceNumber, int taximeterNumber) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.drivingLicenceNumber = drivingLicenceNumber;
-        this.dateOfObtain = dateOfObtain;
-        this.taxiLicenceNumber = taxiLicenceNumber;
-        this.taximeterNumber = taximeterNumber;
-        driverTypes.add(DriverType.TAXI_DRIVER);
-    }
 
     public Driver() {
 
-    }
-
-    public int getCommercialDrivingLicenceNumber() throws Exception {
-        if(driverTypes.contains(DriverType.LORRY_DRIVER))
-        {
-            return commercialDrivingLicenceNumber;
-        }
-        throw new Exception("This driver is not an Lorry Driver");
-    }
-
-    public void setCommercialDrivingLicenceNumber(int commercialDrivingLicenceNumber) throws Exception {
-        if(driverTypes.contains(DriverType.LORRY_DRIVER))
-        {
-            this.commercialDrivingLicenceNumber = commercialDrivingLicenceNumber;
-        }
-        throw new Exception("This driver is not an Lorry Driver");
-    }
-
-    public int getTaxiLicenceNumber() throws Exception {
-        if(driverTypes.contains(DriverType.TAXI_DRIVER))
-        {
-            return taxiLicenceNumber;
-        }
-        throw new Exception("This driver is not an Taxi Driver");
-    }
-
-    public void setTaxiLicenceNumber(int taxiLicenceNumber) throws Exception {
-        if(driverTypes.contains(DriverType.TAXI_DRIVER))
-        {
-            this.taxiLicenceNumber = taxiLicenceNumber;
-        }
-        throw new Exception("This driver is not an Taxi Driver");
-    }
-
-    public int getTaximeterNumber() throws Exception {
-        if(driverTypes.contains(DriverType.TAXI_DRIVER))
-        {
-            return taximeterNumber;
-        }
-        throw new Exception("This driver is not an Taxi Driver");
-    }
-
-    public void setTaximeterNumber(int taximeterNumber) throws Exception {
-        if(driverTypes.contains(DriverType.TAXI_DRIVER))
-        {
-            this.taximeterNumber = taximeterNumber;
-        }
-        throw new Exception("This driver is not an Taxi Driver");
     }
 
     public String getFirstName() {
@@ -158,52 +67,13 @@ public class Driver
 
     @Override
     public String toString() {
-        if( driverTypes.contains(DriverType.DRIVER) &&
-                driverTypes.contains(DriverType.LORRY_DRIVER) &&
-                driverTypes.contains(DriverType.TAXI_DRIVER))
-        {
-            return "Lorry & Taxi Driver{" +
-                    "firstName='" + firstName + '\'' +
-                    ", lastName='" + lastName + '\'' +
-                    ", drivingLicenceNumber=" + drivingLicenceNumber +
-                    ", dateOfObtain=" + dateOfObtain +
-                    ", commercialDrivingLicenceNumber=" + commercialDrivingLicenceNumber +
-                    ", taxiLicenceNumber=" + taxiLicenceNumber +
-                    ", taximeterNumber=" + taximeterNumber +
-                    '}';
-        }
-        else if( driverTypes.contains(DriverType.DRIVER) &&
-                driverTypes.contains(DriverType.LORRY_DRIVER))
-        {
-            return "Lorry Driver{" +
-                    "firstName='" + firstName + '\'' +
-                    ", lastName='" + lastName + '\'' +
-                    ", drivingLicenceNumber=" + drivingLicenceNumber +
-                    ", dateOfObtain=" + dateOfObtain +
-                    ", commercialDrivingLicenceNumber=" + commercialDrivingLicenceNumber +
-                    '}';
-        }
-        else if( driverTypes.contains(DriverType.DRIVER) &&
-                driverTypes.contains(DriverType.TAXI_DRIVER))
-        {
-            return "Taxi Driver{" +
-                    "firstName='" + firstName + '\'' +
-                    ", lastName='" + lastName + '\'' +
-                    ", drivingLicenceNumber=" + drivingLicenceNumber +
-                    ", dateOfObtain=" + dateOfObtain +
-                    ", taxiLicenceNumber=" + taxiLicenceNumber +
-                    ", taximeterNumber=" + taximeterNumber +
-                    '}';
-        }
-        else
-        {
-            return "Driver{" +
-                    "firstName='" + firstName + '\'' +
-                    ", lastName='" + lastName + '\'' +
-                    ", drivingLicenceNumber=" + drivingLicenceNumber +
-                    ", dateOfObtain=" + dateOfObtain +
-                    '}';
-        }
+        return "Driver{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", drivingLicenceNumber=" + drivingLicenceNumber +
+                ", dateOfObtain=" + dateOfObtain +
+                '}';
     }
 
     public void setId(Long id) {
