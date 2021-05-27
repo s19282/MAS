@@ -1,20 +1,27 @@
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Entity(name = "Visit")
 public class Visit implements Serializable
 {
+//    TODO: numeration
+    @Id
+    @GeneratedValue
+    private Long id;
     private LocalDate startDate;
     private LocalDate expectedEndDate;
     private LocalDate endDate;
     private Double estimatedCost;
-    private final List<Repair> repairs = new ArrayList<>();
+    @OneToMany(
+            mappedBy = "visit",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Repair> repairs = new ArrayList<>();
     private static Double manHourCost = 200D;
-    private Long id;
 
     public Visit(LocalDate startDate, LocalDate expectedEndDate, LocalDate endDate, Double estimatedCost) {
         this.startDate = startDate;
@@ -27,6 +34,10 @@ public class Visit implements Serializable
         this.startDate = startDate;
         this.expectedEndDate = expectedEndDate;
         this.estimatedCost = estimatedCost;
+    }
+
+    public Visit() {
+
     }
 
     public void addRepair(Repair repair)
@@ -128,7 +139,6 @@ public class Visit implements Serializable
         this.id = id;
     }
 
-    @Id
     public Long getId() {
         return id;
     }

@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="cw08" target="1.8" />
+      <module name="cw08" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

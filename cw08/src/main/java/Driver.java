@@ -1,10 +1,14 @@
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.EnumSet;
+import java.util.Set;
 
-enum DriverType { DRIVER,LORRY_DRIVER,TAXI_DRIVER }
-
+@Entity
 public class Driver
 {
+    @Id
+    @GeneratedValue
+    private Long id;
     private String firstName;
     private String lastName;
     private int drivingLicenceNumber;
@@ -14,8 +18,10 @@ public class Driver
     private int taxiLicenceNumber;
     private int taximeterNumber;
 
-    private final EnumSet<DriverType> driverTypes = EnumSet.of(DriverType.DRIVER);
-    
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    private final Set<DriverType> driverTypes = EnumSet.of(DriverType.DRIVER);
+
     public Driver(String firstName, String lastName, int drivingLicenceNumber, LocalDate dateOfObtain)
     {
         this.firstName = firstName;
@@ -53,6 +59,10 @@ public class Driver
         this.taxiLicenceNumber = taxiLicenceNumber;
         this.taximeterNumber = taximeterNumber;
         driverTypes.add(DriverType.TAXI_DRIVER);
+    }
+
+    public Driver() {
+
     }
 
     public int getCommercialDrivingLicenceNumber() throws Exception {
@@ -183,5 +193,13 @@ public class Driver
                     ", dateOfObtain=" + dateOfObtain +
                     '}';
         }
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

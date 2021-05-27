@@ -1,13 +1,21 @@
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.time.LocalTime;
-
+@Entity
 public class Repair implements Serializable
 {
+    @Id
+    @GeneratedValue
+    private Long id;
     private String partName;
     private String description;
     private LocalTime duration;
     private RepairState state;
     private Double partsCost;
+    @ManyToOne
     private Visit visit;
 
     public Repair(String partName, String description, LocalTime duration, RepairState state, Double partsCost)
@@ -23,6 +31,10 @@ public class Repair implements Serializable
     {
         this.duration = duration;
         this.partsCost = partsCost;
+    }
+
+    public Repair() {
+
     }
 
     public void setVisit(Visit visit)
@@ -120,5 +132,13 @@ public class Repair implements Serializable
                 ", state=" + state +
                 ", partsCost=" + partsCost +
                 "}";
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
