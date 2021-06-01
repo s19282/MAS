@@ -27,6 +27,7 @@ public class Visit implements Serializable
             orphanRemoval = true
     )
     private final List<Repair> repairs = new ArrayList<>();
+    @Basic
     private static Double manHourCost = 200D;
 
     public Visit(LocalDate startDate, LocalDate expectedEndDate, LocalDate endDate, Double estimatedCost) {

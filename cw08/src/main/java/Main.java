@@ -72,6 +72,18 @@ public class Main
 //            session.remove(visit);
             session.getTransaction().commit();
 
+            builder = session.getCriteriaBuilder();
+
+            CriteriaQuery<Repair> criteria2 = builder.createQuery( Repair.class );
+            Root<Repair> root2 = criteria2.from( Repair.class );
+            criteria2.select( root2 );
+            List<Repair> repairs = session.createQuery( criteria2 ).getResultList();
+
+            for(Repair r : repairs)
+            {
+                System.out.println(r);
+            }
+
 //=================Inheritance==================
             session.beginTransaction();
             Driver driver = new Driver("Alan","Vicknair",1212, LocalDate.now().minusYears(3));
@@ -80,9 +92,26 @@ public class Main
             session.save(driver);
             session.save(lorryDriver);
             session.save(taxiDriver);
-
+//            driver.setFirstName("nie Alan");
+//            session.update(driver);
 //            session.remove(driver);
 
+            session.getTransaction().commit();
+
+
+            session.beginTransaction();
+
+            builder = session.getCriteriaBuilder();
+
+            CriteriaQuery<Driver> criteria3 = builder.createQuery( Driver.class );
+            Root<LorryDriver> root3 = criteria3.from( LorryDriver.class );
+            criteria3.select( root3 );
+            List<Driver> driversFromDb = session.createQuery( criteria3 ).getResultList();
+
+            for(Driver d : driversFromDb)
+            {
+                System.out.println(d);
+            }
             session.getTransaction().commit();
 
             session.close();
