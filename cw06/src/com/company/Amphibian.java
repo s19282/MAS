@@ -5,7 +5,7 @@ public class Amphibian extends Car implements Swimmable
     private int maxSpeed;
     private int displacement;
     private int numberOfSeats;
-//TODO : add class boat
+
     public Amphibian(String make, String model, int numberOfWheels, int maxSpeed, int displacement, int numberOfSeats) {
         super(make, model, numberOfWheels);
         setMaxSpeed(maxSpeed);

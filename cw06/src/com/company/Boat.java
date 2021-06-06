@@ -1,16 +1,17 @@
 package com.company;
 
-public class Boat
+public class Boat implements Swimmable
 {
     private String make;
     private String model;
     private int displacement;
+    private int numberOfSeats;
 
-    public Boat(String make, String model, int displacement)
-    {
-        this.make = make;
-        this.model = model;
-        this.displacement = displacement;
+    public Boat(String make, String model, int displacement, int numberOfSeats) {
+        setMake(make);
+        setModel(model);
+        setDisplacement(displacement);
+        setNumberOfSeats(numberOfSeats);
     }
 
     public String getMake() {
@@ -29,10 +30,21 @@ public class Boat
         this.model = model;
     }
 
+
+    @Override
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    @Override
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
+    }
+    @Override
     public int getDisplacement() {
         return displacement;
     }
-
+    @Override
     public void setDisplacement(int displacement) {
         this.displacement = displacement;
     }
