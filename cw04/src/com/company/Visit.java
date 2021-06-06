@@ -16,6 +16,8 @@ public class Visit implements Serializable
     private LocalDate expectedEndDate;
     private LocalDate endDate;
     private Double estimatedCost;
+    private String tipsForMechanic;
+    private List<String> clientDemands;
     private List<Repair> repairs;
     private static Double manHourCost = 200D;
     private static List<Visit> extent = new ArrayList<>();
@@ -28,21 +30,49 @@ public class Visit implements Serializable
         this.repairs = repairs;
     }
 
-    public Visit(LocalDate startDate, LocalDate expectedEndDate, LocalDate endDate, Double estimatedCost, List<Repair> repairs) {
+    public Visit(LocalDate startDate, LocalDate expectedEndDate, LocalDate endDate, Double estimatedCost, List<Repair> repairs, List<String> clientDemands, String tipsForMechanic) {
         this.startDate = startDate;
         this.expectedEndDate = expectedEndDate;
         this.endDate = endDate;
         this.estimatedCost = estimatedCost;
+        this.tipsForMechanic = tipsForMechanic;
         this.repairs = repairs;
+        this.clientDemands = clientDemands;
         addVisit(this);
     }
 
-    public Visit(LocalDate startDate, LocalDate expectedEndDate, Double estimatedCost, List<Repair> repairs) {
+    public Visit(LocalDate startDate, LocalDate expectedEndDate, Double estimatedCost, List<Repair> repairs, List<String> clientDemands, String tipsForMechanic) {
         this.startDate = startDate;
         this.expectedEndDate = expectedEndDate;
         this.estimatedCost = estimatedCost;
+        this.clientDemands = clientDemands;
         this.repairs = repairs;
+        this.tipsForMechanic = tipsForMechanic;
         addVisit(this);
+    }
+
+    public String getTipsForMechanic() {
+        return tipsForMechanic;
+    }
+
+    public void setTipsForMechanic(String tipsForMechanic) {
+        this.tipsForMechanic = tipsForMechanic;
+    }
+
+    public List<String> getClientDemands() {
+        return clientDemands;
+    }
+
+    public void setClientDemands(List<String> clientDemands) {
+        this.clientDemands = clientDemands;
+    }
+
+    public static List<Visit> getExtent() {
+        return extent;
+    }
+
+    public static void setExtent(List<Visit> extent) {
+        Visit.extent = extent;
     }
 
     public static List<Visit> getVisits(LocalDate dateSince, LocalDate dateTo)

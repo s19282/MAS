@@ -19,11 +19,17 @@ public class Main {
         repairs.add(r2);
         repairs.add(r3);
 
-        Visit visit1 = new Visit(LocalDate.now(), LocalDate.now().plusDays(1), LocalDate.now().plusDays(2), 50D, repairs);
-        Visit visit2 = new Visit(LocalDate.now().minusDays(1), LocalDate.now().plusDays(2),45D, repairs);
-        Visit visit3 = new Visit(LocalDate.now().minusDays(2), LocalDate.now().plusDays(3),55D, repairs);
-        Visit visit4 = new Visit(LocalDate.now().minusDays(3), LocalDate.now().plusDays(4),65D, repairs);
-        Visit visit5 = new Visit(LocalDate.now().minusDays(4), LocalDate.now().plusDays(5),75D, repairs);
+        List<String> clientDemands = new ArrayList<>();
+        clientDemands.add("Oil Change");
+        clientDemands.add("Check air conditioning");
+        clientDemands.add("Replace tires");
+        clientDemands.add("Replace brake pads");
+
+        Visit visit1 = new Visit(LocalDate.now(), LocalDate.now().plusDays(1), LocalDate.now().plusDays(2), 50D, repairs, clientDemands, "be careful with brake caliper bolts");
+        Visit visit2 = new Visit(LocalDate.now().minusDays(1), LocalDate.now().plusDays(2),45D, repairs, clientDemands, "be careful with brake caliper bolts");
+        Visit visit3 = new Visit(LocalDate.now().minusDays(2), LocalDate.now().plusDays(3),55D, repairs, clientDemands, "be careful with brake caliper bolts");
+        Visit visit4 = new Visit(LocalDate.now().minusDays(3), LocalDate.now().plusDays(4),65D, repairs, clientDemands, "be careful with brake caliper bolts");
+        Visit visit5 = new Visit(LocalDate.now().minusDays(4), LocalDate.now().plusDays(5),75D, repairs, clientDemands, "be careful with brake caliper bolts");
 
 //        Extent
         Visit.showExtent();
@@ -56,16 +62,16 @@ public class Main {
             e.printStackTrace();
         }
 //      Non-primitive data type
-        System.out.println(visit1.getStartDate());
-        visit1.setStartDate(LocalDate.now().minusWeeks(1));
-        System.out.println(visit1.getStartDate());
+        System.out.println(visit1.getTipsForMechanic());
+        visit1.setTipsForMechanic("before removing oil filter unscrew oil filler cap");
+        System.out.println(visit1.getTipsForMechanic());
         System.out.println("--------------------");
 //      Optional property
         System.out.println(visit3.getEndDate());
         System.out.println(visit3);
         System.out.println("--------------------");
 //      Repeatable attribute
-        System.out.println(visit5.getRepairs());
+        System.out.println(visit5.getClientDemands());
         System.out.println("--------------------");
 //      Class attribute
         System.out.println(Visit.getManHourCost());
