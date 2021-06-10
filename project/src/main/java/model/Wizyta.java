@@ -1,16 +1,12 @@
-import org.hibernate.annotations.GenericGenerator;
+package model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
 public class Wizyta {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GenericGenerator(name = "increment",strategy = "increment")
     private Long id;
     private LocalDateTime dataGodzinaRozpoczecia;
     private LocalDateTime przewidywanaDataGodzinaZakonczenia;

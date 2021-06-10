@@ -15,6 +15,6 @@
 		<property name="format_sql">true</property>
 		<property name="hbm2ddl.auto">create</property>
 		<property name="hibernate.generate_statistics">true</property>
-		<mapping class="Wizyta"/>
+		<mapping class="model.Wizyta"/>
 	</session-factory>
 </hibernate-configuration>
