@@ -16,5 +16,9 @@
 		<property name="hbm2ddl.auto">create</property>
 		<property name="hibernate.generate_statistics">true</property>
 		<mapping class="model.Wizyta"/>
+		<mapping class="model.Naprawa"/>
+		<mapping class="model.CzynnoscEksploatacyjna"/>
+		<mapping class="model.Czesc"/>
+		<mapping class="model.Samochod"/>
 	</session-factory>
 </hibernate-configuration>

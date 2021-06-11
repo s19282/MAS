@@ -1,15 +1,26 @@
 package model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Samochod {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "increment",strategy = "increment")
     private Long id;
     private String numerRejestracyjny;
     private String marka;
     private String model;
+    @OneToMany(
+            mappedBy = "samochod",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private final List<Wizyta> wizyty = new ArrayList<>();
 
     public Samochod(String numerRejestracyjny, String marka, String model) {
         this.numerRejestracyjny = numerRejestracyjny;

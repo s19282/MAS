@@ -1,12 +1,17 @@
 package model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Wizyta {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "increment",strategy = "increment")
     private Long id;
     private LocalDateTime dataGodzinaRozpoczecia;
     private LocalDateTime przewidywanaDataGodzinaZakonczenia;
@@ -15,6 +20,14 @@ public class Wizyta {
     private Double koszt;
     private Status status;
     private static Double kosztRoboczogodziny = 250d;
+    @OneToMany(
+            mappedBy = "wizyta",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private final List<Naprawa> naprawy = new ArrayList<>();
+    @ManyToOne
+    private Samochod samochod;
 
     public Wizyta(LocalDateTime dataGodzinaRozpoczecia, LocalDateTime przewidywanaDataGodzinaZakonczenia, LocalDateTime dataGodzinaZakonczenia, Double szacowanyKoszt, Double koszt) {
         this.dataGodzinaRozpoczecia = dataGodzinaRozpoczecia;

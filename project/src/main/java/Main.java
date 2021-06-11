@@ -1,3 +1,5 @@
+import model.CzynnoscEksploatacyjna;
+import model.Naprawa;
 import model.Wizyta;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,6 +11,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 public class Main
@@ -31,8 +34,12 @@ public class Main
             session.beginTransaction();
             Wizyta wizyta = new Wizyta(LocalDateTime.now(), LocalDateTime.now().plusDays(1),LocalDateTime.now().plusDays(1),500d,450d);
             Wizyta wizyta2 = new Wizyta(LocalDateTime.now(), LocalDateTime.now().plusDays(1),LocalDateTime.now().plusDays(1),550d,450d);
+            Naprawa naprawa = new Naprawa("silnik","wymiana na nowy", LocalTime.now(),500d);
+            CzynnoscEksploatacyjna czynnoscEksploatacyjna = new CzynnoscEksploatacyjna("opis",54d);
+            naprawa.dodajCzynnoscEksploatacyjna(czynnoscEksploatacyjna);
 
-
+            session.save(naprawa);
+            session.save(czynnoscEksploatacyjna);
             session.save(wizyta);
             session.save(wizyta2);
 

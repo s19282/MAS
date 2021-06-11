@@ -3,6 +3,7 @@ package model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Czesc {
@@ -11,6 +12,8 @@ public class Czesc {
     @Column(length = 100)
     private String nazwaCzesci;
     private Double koszt;
+    @ManyToOne
+    private Naprawa naprawa;
 
     public Czesc(String nazwaCzesci, Double koszt) {
         this.nazwaCzesci = nazwaCzesci;

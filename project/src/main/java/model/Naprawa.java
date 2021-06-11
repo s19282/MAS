@@ -1,11 +1,17 @@
 package model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Naprawa {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "increment",strategy = "increment")
     private Long id;
     @Column(length = 200)
     private String nazwaPodzespolu;
@@ -15,16 +21,50 @@ public class Naprawa {
     @Enumerated(EnumType.STRING)
     private Status status;
     private Double koszt;
+    @ManyToMany(mappedBy = "naprawy")
+    private final List<CzynnoscEksploatacyjna> czynnosciEksploatacyjne = new ArrayList<>();
+    @OneToMany(
+            mappedBy = "naprawa",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private final List<Czesc> czesci = new ArrayList<>();
+    @ManyToOne
+    private Wizyta wizyta;
 
-    public Naprawa(String nazwaPodzespolu, String opis, LocalTime czasTrwania, Status status, Double koszt) {
+    public Naprawa(String nazwaPodzespolu, String opis, LocalTime czasTrwania, Double koszt) {
         this.nazwaPodzespolu = nazwaPodzespolu;
         this.opis = opis;
         this.czasTrwania = czasTrwania;
-        this.status = status;
+        status = Status.OCZEKUJACA;
         this.koszt = koszt;
     }
 
     public Naprawa() {
+    }
+
+    public void dodajCzynnoscEksploatacyjna(CzynnoscEksploatacyjna czynnoscEksploatacyjna)
+    {
+        if(!czynnosciEksploatacyjne.contains(czynnoscEksploatacyjna))
+        {
+            czynnosciEksploatacyjne.add(czynnoscEksploatacyjna);
+            czynnoscEksploatacyjna.dodajNaprawe(this);
+        }
+    }
+
+
+    public void usunCzynnoscEksploatacyjna(CzynnoscEksploatacyjna czynnoscEksploatacyjna)
+    {
+        if(czynnosciEksploatacyjne.contains(czynnoscEksploatacyjna))
+        {
+            czynnosciEksploatacyjne.remove(czynnoscEksploatacyjna);
+            czynnoscEksploatacyjna.usunNaprawe(this);
+        }
+    }
+
+    public List<CzynnoscEksploatacyjna> getCzynnosciEksploatacyjne()
+    {
+        return czynnosciEksploatacyjne;
     }
 
     public Long getId() {
