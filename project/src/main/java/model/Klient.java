@@ -3,6 +3,8 @@ package model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -15,6 +17,8 @@ public abstract class Klient {
     private String numerKlienta;
     private Double rabatNaUslugi;
     private static Double maxRabatNaUslugi;
+    @ManyToMany(mappedBy = "klienci")
+    private final List<Samochod> samochody = new ArrayList<>();
 
     public Klient(String numerKlienta, Double rabatNaUslugi) {
         this.numerKlienta = numerKlienta;

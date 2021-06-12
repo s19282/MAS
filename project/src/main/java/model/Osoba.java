@@ -2,13 +2,13 @@ package model;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public abstract class Osoba {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Osoba extends Klient{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment",strategy = "increment")
@@ -16,6 +16,12 @@ public abstract class Osoba {
     private String imie;
     private String nazwisko;
     private Long numerTelefonu;
+    @OneToMany(
+            mappedBy = "osoba",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private final List<Zatrudnienie> zatrudnienia = new ArrayList<>();
 
     public Osoba(Long id, String imie, String nazwisko, Long numerTelefonu) {
         this.id = id;

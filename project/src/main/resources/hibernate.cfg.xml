@@ -20,5 +20,9 @@
 		<mapping class="model.CzynnoscEksploatacyjna"/>
 		<mapping class="model.Czesc"/>
 		<mapping class="model.Samochod"/>
+		<mapping class="model.Klient"/>
+		<mapping class="model.Stanowisko"/>
+		<mapping class="model.Zatrudnienie"/>
+		<mapping class="model.Osoba"/>
 	</session-factory>
 </hibernate-configuration>

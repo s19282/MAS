@@ -2,10 +2,9 @@ package model;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Stanowisko {
@@ -15,6 +14,12 @@ public class Stanowisko {
     private Long id;
     private String nazwa;
     private String zakresObowiazkow;
+    @OneToMany(
+            mappedBy = "stanowisko",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private final List<Zatrudnienie> zatrudnienia = new ArrayList<>();
 
     public Stanowisko(String nazwa, String zakresObowiazkow) {
         this.nazwa = nazwa;

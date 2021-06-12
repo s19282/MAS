@@ -21,6 +21,14 @@ public class Samochod {
             orphanRemoval = true
     )
     private final List<Wizyta> wizyty = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "KlientSamochod",
+            joinColumns = { @JoinColumn(name = "samochodId") },
+            inverseJoinColumns = { @JoinColumn(name = "klientId") }
+    )
+    private final List<Klient> klienci = new ArrayList<>();
+
 
     public Samochod(String numerRejestracyjny, String marka, String model) {
         this.numerRejestracyjny = numerRejestracyjny;

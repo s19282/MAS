@@ -2,10 +2,7 @@ package model;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -17,6 +14,10 @@ public class Zatrudnienie {
     private LocalDate dataZatrudnienia;
     private LocalDate dataZwolnienia;
     private Double pensja;
+    @ManyToOne
+    private Stanowisko stanowisko;
+    @ManyToOne
+    private Osoba osoba;
 
     public Zatrudnienie(LocalDate dataZatrudnienia, LocalDate dataZwolnienia, Double pensja) {
         this.dataZatrudnienia = dataZatrudnienia;
