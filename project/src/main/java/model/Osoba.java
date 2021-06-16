@@ -13,14 +13,14 @@ enum TypyOsoby {PRACOWNIK, KLIENT_INDYWIDUALNY}
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Osoba extends Klient{
+public class Osoba extends Klient{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment",strategy = "increment")
     private Long id;
     private String imie;
     private String nazwisko;
-    private Long numerTelefonu;
+    private int numerTelefonu;
     private Double stawkaGodzinowa;
     private Long PESEL;
     @OneToMany(
@@ -33,8 +33,7 @@ public abstract class Osoba extends Klient{
     private Set<TypyOsoby> typyOsob = null;
 
 //    Konstruktor pracownika
-    public Osoba(Long id, String imie, String nazwisko, Long numerTelefonu, Double stawkaGodzinowa, Long PESEL) {
-        this.id = id;
+    public Osoba(String imie, String nazwisko, int numerTelefonu, Double stawkaGodzinowa, Long PESEL) {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.numerTelefonu = numerTelefonu;
@@ -43,20 +42,18 @@ public abstract class Osoba extends Klient{
         typyOsob = EnumSet.of(TypyOsoby.PRACOWNIK);
     }
     //    Konstruktor klienta indywidualnego
-    public Osoba(Long id, String imie, String nazwisko, Long numerTelefonu, String numerKlienta) throws Exception {
+    public Osoba(String imie, String nazwisko, int numerTelefonu, String numerKlienta) throws Exception {
         super(numerKlienta);
         Klient.setMaxRabatNaUslugi(0.2);
-        this.id = id;
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.numerTelefonu = numerTelefonu;
         typyOsob = EnumSet.of(TypyOsoby.KLIENT_INDYWIDUALNY);
     }
     //    Konstruktor klienta indywidualnego będącego pracownikiem
-    public Osoba(Long id, String imie, String nazwisko, Long numerTelefonu, String numerKlienta, Double stawkaGodzinowa, Long PESEL) throws Exception {
+    public Osoba(String imie, String nazwisko, int numerTelefonu, String numerKlienta, Double stawkaGodzinowa, Long PESEL) throws Exception {
         super(numerKlienta);
         Klient.setMaxRabatNaUslugi(0.2);
-        this.id = id;
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.numerTelefonu = numerTelefonu;
@@ -161,11 +158,11 @@ public abstract class Osoba extends Klient{
         this.nazwisko = nazwisko;
     }
 
-    public Long getNumerTelefonu() {
+    public int getNumerTelefonu() {
         return numerTelefonu;
     }
 
-    public void setNumerTelefonu(Long numerTelefonu) {
+    public void setNumerTelefonu(int numerTelefonu) {
         this.numerTelefonu = numerTelefonu;
     }
     public Osoba wyswietlPosortowanychWgStazu()
@@ -189,4 +186,62 @@ public abstract class Osoba extends Klient{
         return obliczStazPracy()*500D;
     }
 
+    @Override
+    public String getNumerKlienta() throws Exception {
+        if(this.typyOsob.contains(TypyOsoby.KLIENT_INDYWIDUALNY))
+        {
+            return super.getNumerKlienta();
+        }
+        throw new Exception("Ta osoba nie jest pracownikiem!");
+    }
+
+    @Override
+    public void setNumerKlienta(String numerKlienta) throws Exception {
+        if(typyOsob.contains(TypyOsoby.KLIENT_INDYWIDUALNY))
+        {
+            super.setNumerKlienta(numerKlienta);
+        }
+        else
+        {
+            throw new Exception("Ta osoba nie jest pracownikiem!");
+        }
+    }
+
+    @Override
+    public String toString() {
+        if(typyOsob.contains(TypyOsoby.PRACOWNIK))
+            return "Pracownik{" +
+                    "id=" + id +
+                    ", imie='" + imie + '\'' +
+                    ", nazwisko='" + nazwisko + '\'' +
+                    ", numerTelefonu=" + numerTelefonu +
+                    ", stawkaGodzinowa=" + stawkaGodzinowa +
+                    ", PESEL=" + PESEL +
+                    '}';
+        else if(typyOsob.contains(TypyOsoby.KLIENT_INDYWIDUALNY)) {
+            try {
+                return "KlientIndywidualny{" +
+                        "id=" + id +
+                        ", imie='" + imie + '\'' +
+                        ", nazwisko='" + nazwisko + '\'' +
+                        ", numerTelefonu=" + numerTelefonu +
+                        ", numerKlienta=" + super.getNumerKlienta() +
+                        '}';
+            } catch (Exception ignored) { }
+        }
+        else {
+            try {
+                return "PracownikKlientIndywidualny{" +
+                        "id=" + id +
+                        ", imie='" + imie + '\'' +
+                        ", nazwisko='" + nazwisko + '\'' +
+                        ", numerTelefonu=" + numerTelefonu +
+                        ", stawkaGodzinowa=" + stawkaGodzinowa +
+                        ", PESEL=" + PESEL +
+                        ", numerKlienta=" + super.getNumerKlienta() +
+                        '}';
+            } catch (Exception ignored) { }
+        }
+        return null;
+    }
 }

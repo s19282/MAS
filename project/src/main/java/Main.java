@@ -1,5 +1,6 @@
 import model.CzynnoscEksploatacyjna;
 import model.Naprawa;
+import model.Osoba;
 import model.Wizyta;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,57 +19,68 @@ import java.util.List;
 public class Main
 {
     public static void main(String[] args) {
-        StandardServiceRegistry registry = null;
-        SessionFactory sessionFactory = null;
-        try
-        {
-            registry = new StandardServiceRegistryBuilder()
-                    .configure()
-                    .build();
-            sessionFactory = new MetadataSources(registry)
-                    .buildMetadata()
-                    .buildSessionFactory();
-            Session session = sessionFactory.openSession();
-
-//==============Class=====================
-            session.beginTransaction();
-            Wizyta wizyta = new Wizyta(LocalDateTime.now(), LocalDateTime.now().plusDays(1),LocalDateTime.now().plusDays(1),500d,450d);
-            Wizyta wizyta2 = new Wizyta(LocalDateTime.now(), LocalDateTime.now().plusDays(1),LocalDateTime.now().plusDays(1),550d,450d);
-            Naprawa naprawa = new Naprawa("silnik","wymiana na nowy", LocalTime.now(),500d);
-            CzynnoscEksploatacyjna czynnoscEksploatacyjna = new CzynnoscEksploatacyjna("opis",54d);
-            naprawa.dodajCzynnoscEksploatacyjna(czynnoscEksploatacyjna);
-
-            session.save(naprawa);
-            session.save(czynnoscEksploatacyjna);
-            session.save(wizyta);
-            session.save(wizyta2);
-
-            session.getTransaction().commit();
-
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-
-            CriteriaQuery<Wizyta> criteria = builder.createQuery( Wizyta.class );
-            Root<Wizyta> root = criteria.from( Wizyta.class );
-            criteria.select( root );
-//            criteria.where( builder.equal( root.get( "year" ), 2014 ) );
-            List<Wizyta> wizyty = session.createQuery( criteria ).getResultList();
-
-            for(Wizyta w : wizyty)
-            {
-                System.out.println(w);
-            }
-            session.close();
-        }
-        catch (Exception e)
-        {
+        try {
+            Osoba osobaPracownik = new Osoba("Imie","Nazwisko",353454434,20D, 44225586433L);
+            Osoba osobaKlient = new Osoba("Imie","Nazwisko",353454434,"c1242");
+            Osoba osobaPracownikKlientIndywidualny = new Osoba("Imie","Nazwisko",53454434,"c1243",20D, 44225586433L);
+            System.out.println(osobaPracownik);
+//            System.out.println(osobaPracownik.getNumerKlienta());
+            System.out.println(osobaKlient);
+            System.out.println(osobaPracownikKlientIndywidualny);
+        } catch (Exception e) {
             e.printStackTrace();
-            StandardServiceRegistryBuilder.destroy(registry);
         }
-        finally {
-            if(sessionFactory !=null)
-            {
-                sessionFactory.close();
-            }
-        }
+//        StandardServiceRegistry registry = null;
+//        SessionFactory sessionFactory = null;
+//        try
+//        {
+//            registry = new StandardServiceRegistryBuilder()
+//                    .configure()
+//                    .build();
+//            sessionFactory = new MetadataSources(registry)
+//                    .buildMetadata()
+//                    .buildSessionFactory();
+//            Session session = sessionFactory.openSession();
+//
+////==============Class=====================
+//            session.beginTransaction();
+//            Wizyta wizyta = new Wizyta(LocalDateTime.now(), LocalDateTime.now().plusDays(1),LocalDateTime.now().plusDays(1),500d,450d);
+//            Wizyta wizyta2 = new Wizyta(LocalDateTime.now(), LocalDateTime.now().plusDays(1),LocalDateTime.now().plusDays(1),550d,450d);
+//            Naprawa naprawa = new Naprawa("silnik","wymiana na nowy", LocalTime.now(),500d);
+//            CzynnoscEksploatacyjna czynnoscEksploatacyjna = new CzynnoscEksploatacyjna("opis",54d);
+//            naprawa.dodajCzynnoscEksploatacyjna(czynnoscEksploatacyjna);
+//
+//            session.save(naprawa);
+//            session.save(czynnoscEksploatacyjna);
+//            session.save(wizyta);
+//            session.save(wizyta2);
+//
+//            session.getTransaction().commit();
+//
+//            CriteriaBuilder builder = session.getCriteriaBuilder();
+//
+//            CriteriaQuery<Wizyta> criteria = builder.createQuery( Wizyta.class );
+//            Root<Wizyta> root = criteria.from( Wizyta.class );
+//            criteria.select( root );
+////            criteria.where( builder.equal( root.get( "year" ), 2014 ) );
+//            List<Wizyta> wizyty = session.createQuery( criteria ).getResultList();
+//
+//            for(Wizyta w : wizyty)
+//            {
+//                System.out.println(w);
+//            }
+//            session.close();
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//            StandardServiceRegistryBuilder.destroy(registry);
+//        }
+//        finally {
+//            if(sessionFactory !=null)
+//            {
+//                sessionFactory.close();
+//            }
+//        }
     }
 }

@@ -35,11 +35,12 @@ public abstract class Klient {
         this.id = id;
     }
 
-    public String getNumerKlienta() {
+    public String getNumerKlienta() throws Exception
+    {
         return numerKlienta;
     }
 
-    public void setNumerKlienta(String numerKlienta) {
+    public void setNumerKlienta(String numerKlienta) throws Exception {
         this.numerKlienta = numerKlienta;
     }
 
