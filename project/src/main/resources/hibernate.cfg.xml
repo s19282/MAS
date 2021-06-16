@@ -24,5 +24,6 @@
 		<mapping class="model.Stanowisko"/>
 		<mapping class="model.Zatrudnienie"/>
 		<mapping class="model.Osoba"/>
+		<mapping class="model.KlientInstytucja"/>
 	</session-factory>
 </hibernate-configuration>

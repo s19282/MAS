@@ -20,9 +20,8 @@ public abstract class Klient {
     @ManyToMany(mappedBy = "klienci")
     private final List<Samochod> samochody = new ArrayList<>();
 
-    public Klient(String numerKlienta, Double rabatNaUslugi) {
+    public Klient(String numerKlienta) {
         this.numerKlienta = numerKlienta;
-        this.rabatNaUslugi = rabatNaUslugi;
     }
 
     public Klient() {

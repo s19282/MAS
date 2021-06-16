@@ -10,6 +10,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -19,7 +20,6 @@ public class Main
     public static void main(String[] args) {
         StandardServiceRegistry registry = null;
         SessionFactory sessionFactory = null;
-
         try
         {
             registry = new StandardServiceRegistryBuilder()

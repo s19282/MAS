@@ -5,7 +5,8 @@ import javax.persistence.Entity;
 @Entity
 public class KlientIndywidualny extends Klient
 {
-    private static Double maxRabatNaUslugi;
+//    TODO: remove
+    private static Double maxRabatNaUslugi = 0.3;
     private String imie;
     private String nazwisko;
     private Long numerTelefonu;
