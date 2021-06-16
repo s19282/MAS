@@ -23,6 +23,8 @@ public class Naprawa {
     private Double koszt;
     @ManyToMany(mappedBy = "naprawy")
     private final List<CzynnoscEksploatacyjna> czynnosciEksploatacyjne = new ArrayList<>();
+    @ManyToMany(mappedBy = "naprawy")
+    private final List<Osoba> osoby = new ArrayList<>();
     @OneToMany(
             mappedBy = "naprawa",
             cascade = CascadeType.ALL,
@@ -43,6 +45,24 @@ public class Naprawa {
     public Naprawa() {
     }
 
+    public void dodajOsobe(Osoba osoba)
+    {
+        if(!osoby.contains(osoba))
+        {
+            osoby.add(osoba);
+            osoba.dodajNaprawe(this);
+        }
+    }
+
+    public void usunOsobe(Osoba osoba)
+    {
+        if(osoby.contains(osoba))
+        {
+            osoby.remove(osoba);
+            osoba.usunNaprawe(this);
+        }
+    }
+
     public void dodajCzynnoscEksploatacyjna(CzynnoscEksploatacyjna czynnoscEksploatacyjna)
     {
         if(!czynnosciEksploatacyjne.contains(czynnoscEksploatacyjna))
@@ -60,6 +80,29 @@ public class Naprawa {
             czynnosciEksploatacyjne.remove(czynnoscEksploatacyjna);
             czynnoscEksploatacyjna.usunNaprawe(this);
         }
+    }
+
+    public void dodajCzesc(Czesc czesc)
+    {
+        if(!czesci.contains(czesc))
+        {
+            czesci.add(czesc);
+            czesc.dodajNaprawe(this);
+        }
+    }
+
+
+    public void usunCzesc(Czesc czesc)
+    {
+        if(czesci.contains(czesc))
+        {
+            czesci.remove(czesc);
+            czesc.usunNaprawe();
+        }
+    }
+
+    public List<Czesc> getCzesci() {
+        return czesci;
     }
 
     public List<CzynnoscEksploatacyjna> getCzynnosciEksploatacyjne()

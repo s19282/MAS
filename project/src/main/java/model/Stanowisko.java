@@ -29,6 +29,28 @@ public class Stanowisko {
     public Stanowisko() {
     }
 
+    public void dodajZatrudnienie(Zatrudnienie zatrudnienie)
+    {
+        if(!zatrudnienia.contains(zatrudnienie))
+        {
+            zatrudnienia.add(zatrudnienie);
+            zatrudnienie.dodajStanowisko(this);
+        }
+    }
+
+    public void usunZatrudnienie(Zatrudnienie zatrudnienie)
+    {
+        if(zatrudnienia.contains(zatrudnienie))
+        {
+            zatrudnienia.remove(zatrudnienie);
+            zatrudnienie.usunStanowisko();
+        }
+    }
+
+    public List<Zatrudnienie> getZatrudnienia() {
+        return zatrudnienia;
+    }
+
     public Long getId() {
         return id;
     }

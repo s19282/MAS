@@ -23,6 +23,35 @@ public class Czesc {
     public Czesc() {
     }
 
+    public void dodajNaprawe(Naprawa naprawa)
+    {
+        if(this.naprawa != null)
+        {
+            if(this.naprawa != naprawa)
+            {
+                this.naprawa.usunCzesc(this);
+                this.naprawa = naprawa;
+                naprawa.dodajCzesc(this);
+            }
+        }
+        else
+        {
+            this.naprawa = naprawa;
+            naprawa.dodajCzesc(this);
+        }
+    }
+
+    public void usunNaprawe()
+    {
+        if(naprawa.getCzesci().contains(this))
+            naprawa.usunCzesc(this);
+
+        if(naprawa !=null)
+        {
+            naprawa = null;
+        }
+    }
+
     public Long getId() {
         return id;
     }

@@ -25,6 +25,64 @@ public class Zatrudnienie {
         this.pensja = pensja;
     }
 
+    public void dodajOsobe(Osoba osoba)
+    {
+        if(this.osoba != null)
+        {
+            if(this.osoba != osoba)
+            {
+                this.osoba.usunZatrudnienie(this);
+                this.osoba = osoba;
+                osoba.dodajZatrudnienie(this);
+            }
+        }
+        else
+        {
+            this.osoba = osoba;
+            osoba.dodajZatrudnienie(this);
+        }
+    }
+
+    public void usunOsobe()
+    {
+        if(osoba.getZatrudnienia().contains(this))
+            osoba.usunZatrudnienie(this);
+
+        if(osoba !=null)
+        {
+            osoba = null;
+        }
+    }
+
+    public void dodajStanowisko(Stanowisko stanowisko)
+    {
+        if(this.stanowisko != null)
+        {
+            if(this.stanowisko != stanowisko)
+            {
+                this.stanowisko.usunZatrudnienie(this);
+                this.stanowisko = stanowisko;
+                stanowisko.dodajZatrudnienie(this);
+            }
+        }
+        else
+        {
+            this.stanowisko = stanowisko;
+            stanowisko.dodajZatrudnienie(this);
+        }
+    }
+
+    public void usunStanowisko()
+    {
+        if(stanowisko.getZatrudnienia().contains(this))
+            stanowisko.usunZatrudnienie(this);
+
+        if(stanowisko !=null)
+        {
+            stanowisko = null;
+        }
+    }
+
     public Zatrudnienie() {
     }
 

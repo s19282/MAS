@@ -41,6 +41,37 @@ public class Wizyta {
     public Wizyta() {
     }
 
+    public void dodajSamochod(Samochod samochod)
+    {
+        if(this.samochod != null)
+        {
+            if(this.samochod != samochod)
+            {
+                this.samochod.usunWizyte(this);
+                this.samochod = samochod;
+                samochod.dodajWizyte(this);
+            }
+        }
+        else
+        {
+            this.samochod = samochod;
+            samochod.dodajWizyte(this);
+        }
+    }
+
+    public void usunSamochod()
+    {
+        if(samochod.getWizyty().contains(this))
+            samochod.usunWizyte(this);
+
+        if(samochod !=null)
+        {
+            samochod = null;
+        }
+
+    }
+
+
     public void setId(Long id) {
         this.id = id;
     }

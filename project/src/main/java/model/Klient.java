@@ -27,6 +27,25 @@ public abstract class Klient {
     public Klient() {
     }
 
+    public void dodajSamochod(Samochod samochod)
+    {
+        if(!samochody.contains(samochod))
+        {
+            samochody.add(samochod);
+            samochod.dodajKlienta(this);
+        }
+    }
+
+
+    public void usunSamochod(Samochod samochod)
+    {
+        if(samochody.contains(samochod))
+        {
+            samochody.remove(samochod);
+            samochod.usunKlienta(this);
+        }
+    }
+
     public Long getId() {
         return id;
     }

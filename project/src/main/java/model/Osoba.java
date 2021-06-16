@@ -31,6 +31,13 @@ public class Osoba extends Klient{
     private final List<Zatrudnienie> zatrudnienia = new ArrayList<>();
     @ElementCollection
     private Set<TypyOsoby> typyOsob = null;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "Osoba_Naprawa",
+            joinColumns = { @JoinColumn(name = "osobaId") },
+            inverseJoinColumns = { @JoinColumn(name = "naprawaId") }
+    )
+    private final List<Naprawa> naprawy = new ArrayList<>();
 
 //    Konstruktor pracownika
     public Osoba(String imie, String nazwisko, int numerTelefonu, Double stawkaGodzinowa, Long PESEL) {
@@ -60,6 +67,43 @@ public class Osoba extends Klient{
         this.stawkaGodzinowa = stawkaGodzinowa;
         this.PESEL = PESEL;
         typyOsob = EnumSet.of(TypyOsoby.PRACOWNIK,TypyOsoby.KLIENT_INDYWIDUALNY);
+    }
+
+    public void dodajZatrudnienie(Zatrudnienie zatrudnienie)
+    {
+        if(!zatrudnienia.contains(zatrudnienie))
+        {
+            zatrudnienia.add(zatrudnienie);
+            zatrudnienie.dodajOsobe(this);
+        }
+    }
+
+
+    public void usunZatrudnienie(Zatrudnienie zatrudnienie)
+    {
+        if(zatrudnienia.contains(zatrudnienie))
+        {
+            zatrudnienia.remove(zatrudnienie);
+            zatrudnienie.usunOsobe();
+        }
+    }
+
+    public void dodajNaprawe(Naprawa naprawa)
+    {
+        if(!naprawy.contains(naprawa))
+        {
+            naprawy.add(naprawa);
+            naprawa.dodajOsobe(this);
+        }
+    }
+
+    public void usunNaprawe(Naprawa naprawa)
+    {
+        if(naprawy.contains(naprawa))
+        {
+            naprawy.remove(naprawa);
+            naprawa.usunOsobe(this);
+        }
     }
 
     public Double getStawkaGodzinowa() throws Exception {

@@ -39,6 +39,48 @@ public class Samochod {
     public Samochod() {
     }
 
+    public void dodajKlienta(Klient klient)
+    {
+        if(!klienci.contains(klient))
+        {
+            klienci.add(klient);
+            klient.dodajSamochod(this);
+        }
+    }
+
+
+    public void usunKlienta(Klient klient)
+    {
+        if(klienci.contains(klient))
+        {
+            klienci.remove(klient);
+            klient.usunSamochod(this);
+        }
+    }
+
+    public void dodajWizyte(Wizyta wizyta)
+    {
+        if(!wizyty.contains(wizyta))
+        {
+            wizyty.add(wizyta);
+            wizyta.dodajSamochod(this);
+        }
+    }
+
+
+    public void usunWizyte(Wizyta wizyta)
+    {
+        if(wizyty.contains(wizyta))
+        {
+            wizyty.remove(wizyta);
+            wizyta.usunSamochod();
+        }
+    }
+
+    public List<Wizyta> getWizyty() {
+        return wizyty;
+    }
+
     public Long getId() {
         return id;
     }
