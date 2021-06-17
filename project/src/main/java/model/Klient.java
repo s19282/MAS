@@ -27,8 +27,7 @@ public abstract class Klient {
     public Klient() {
     }
 
-    public void dodajSamochod(Samochod samochod)
-    {
+    public void dodajSamochod(Samochod samochod) throws Exception {
         if(!samochody.contains(samochod))
         {
             samochody.add(samochod);
@@ -37,8 +36,7 @@ public abstract class Klient {
     }
 
 
-    public void usunSamochod(Samochod samochod)
-    {
+    public void usunSamochod(Samochod samochod) throws Exception {
         if(samochody.contains(samochod))
         {
             samochody.remove(samochod);

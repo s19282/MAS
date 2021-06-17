@@ -39,8 +39,7 @@ public class Samochod {
     public Samochod() {
     }
 
-    public void dodajKlienta(Klient klient)
-    {
+    public void dodajKlienta(Klient klient) throws Exception {
         if(!klienci.contains(klient))
         {
             klienci.add(klient);
@@ -49,8 +48,7 @@ public class Samochod {
     }
 
 
-    public void usunKlienta(Klient klient)
-    {
+    public void usunKlienta(Klient klient) throws Exception {
         if(klienci.contains(klient))
         {
             klienci.remove(klient);

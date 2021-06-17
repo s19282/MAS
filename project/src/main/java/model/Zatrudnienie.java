@@ -19,15 +19,29 @@ public class Zatrudnienie {
     @ManyToOne
     private Osoba osoba;
 
-    public Zatrudnienie(LocalDate dataZatrudnienia, LocalDate dataZwolnienia, Double pensja) {
+    public Zatrudnienie(LocalDate dataZatrudnienia, LocalDate dataZwolnienia, Double pensja, Osoba osoba, Stanowisko stanowisko) throws Exception {
         this.dataZatrudnienia = dataZatrudnienia;
         this.dataZwolnienia = dataZwolnienia;
         this.pensja = pensja;
+
+        dodajOsobe(osoba);
+        dodajStanowisko(stanowisko);
     }
 
-    public Zatrudnienie(LocalDate dataZatrudnienia, Double pensja) {
+    public Zatrudnienie(LocalDate dataZatrudnienia, Double pensja, Osoba osoba, Stanowisko stanowisko) throws Exception {
         this.dataZatrudnienia = dataZatrudnienia;
         this.pensja = pensja;
+
+        dodajOsobe(osoba);
+        dodajStanowisko(stanowisko);
+    }
+
+    public void usunZatrudnienie() throws Exception {
+        dataZatrudnienia=null;
+        dataZwolnienia=null;
+        pensja=null;
+        usunOsobe();
+        usunStanowisko();
     }
 
     public void dodajOsobe(Osoba osoba) throws Exception {

@@ -1,13 +1,14 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 
 @Entity
 public class Czesc {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "increment",strategy = "increment")
     private Long id;
     @Column(length = 100)
     private String nazwaCzesci;

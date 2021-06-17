@@ -45,6 +45,35 @@ public class Naprawa {
     public Naprawa() {
     }
 
+    public void dodajWizyte(Wizyta wizyta)
+    {
+        if(this.wizyta != null)
+        {
+            if(this.wizyta != wizyta)
+            {
+                this.wizyta.usunNaprawe(this);
+                this.wizyta = wizyta;
+                wizyta.dodajNaprawe(this);
+            }
+        }
+        else
+        {
+            this.wizyta = wizyta;
+            wizyta.dodajNaprawe(this);
+        }
+    }
+
+    public void usunWizyte()
+    {
+        if(wizyta.getNaprawy().contains(this))
+            wizyta.usunNaprawe(this);
+
+        if(wizyta !=null)
+        {
+            wizyta = null;
+        }
+    }
+
     public void dodajOsobe(Osoba osoba) throws Exception {
         if(!osoba.getTypyOsob().contains(TypyOsoby.PRACOWNIK))
         {

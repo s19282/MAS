@@ -29,16 +29,30 @@ public class Wizyta {
     @ManyToOne
     private Samochod samochod;
 
-    public Wizyta(LocalDateTime dataGodzinaRozpoczecia, LocalDateTime przewidywanaDataGodzinaZakonczenia, LocalDateTime dataGodzinaZakonczenia, Double szacowanyKoszt, Double koszt) {
+    public Wizyta(LocalDateTime dataGodzinaRozpoczecia, LocalDateTime przewidywanaDataGodzinaZakonczenia, Double szacowanyKoszt) {
         this.dataGodzinaRozpoczecia = dataGodzinaRozpoczecia;
         this.przewidywanaDataGodzinaZakonczenia = przewidywanaDataGodzinaZakonczenia;
-        this.dataGodzinaZakonczenia = dataGodzinaZakonczenia;
         this.szacowanyKoszt = szacowanyKoszt;
-        this.koszt = koszt;
         status = Status.OCZEKUJACA;
     }
 
     public Wizyta() {
+    }
+
+    public void dodajNaprawe(Naprawa naprawa){
+        if(!naprawy.contains(naprawa))
+        {
+            naprawy.add(naprawa);
+            naprawa.dodajWizyte(this);
+        }
+    }
+
+    public void usunNaprawe(Naprawa naprawa){
+        if(naprawy.contains(naprawa))
+        {
+            naprawy.remove(naprawa);
+            naprawa.usunWizyte();
+        }
     }
 
     public void dodajSamochod(Samochod samochod)
@@ -68,9 +82,11 @@ public class Wizyta {
         {
             samochod = null;
         }
-
     }
 
+    public List<Naprawa> getNaprawy() {
+        return naprawy;
+    }
 
     public void setId(Long id) {
         this.id = id;

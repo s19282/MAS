@@ -123,6 +123,24 @@ public class Osoba extends Klient{
         throw new Exception("Ta osoba nie jest pracownikiem!");
     }
 
+    @Override
+    public void dodajSamochod(Samochod samochod) throws Exception {
+        if(!typyOsob.contains(TypyOsoby.KLIENT_INDYWIDUALNY))
+        {
+            throw new Exception("Ta osoba nie jest klientem!");
+        }
+        super.dodajSamochod(samochod);
+    }
+
+    @Override
+    public void usunSamochod(Samochod samochod) throws Exception {
+        if(!typyOsob.contains(TypyOsoby.KLIENT_INDYWIDUALNY))
+        {
+            throw new Exception("Ta osoba nie jest klientem!");
+        }
+        super.usunSamochod(samochod);
+    }
+
     public void setStawkaGodzinowa(Double stawkaGodzinowa) throws Exception {
         if(typyOsob.contains(TypyOsoby.PRACOWNIK))
         {
