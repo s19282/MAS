@@ -31,9 +31,9 @@ public class Test {
             Session session = sessionFactory.openSession();
 
             session.beginTransaction();
-            Osoba osobaPracownik = new Osoba("Imie","Nazwisko",353454434,20D, 44225586433L);
-            Osoba osobaKlient = new Osoba("Imie","Nazwisko",353454434,"c1242");
-            Osoba osobaPracownikKlientIndywidualny = new Osoba("Imie","Nazwisko",53454434,"c1243",20D, 44225586433L);
+            Osoba osobaPracownik = new Osoba("Jan","Kowal",353454434,20D, 44225586433L);
+            Osoba osobaKlient = new Osoba("Bogdan","Wiśniewski",353454434,"c1292");
+            Osoba osobaPracownikKlientIndywidualny = new Osoba("Imie","Nazwisko",53454434,"c1203",20D, 44225586433L);
 
             session.save(osobaPracownik);
             session.save(osobaKlient);

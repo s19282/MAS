@@ -23,7 +23,10 @@ public class Naprawa {
     private Double koszt;
     @ManyToMany(mappedBy = "naprawy")
     private final List<CzynnoscEksploatacyjna> czynnosciEksploatacyjne = new ArrayList<>();
-    @ManyToMany(mappedBy = "naprawy")
+    @ManyToMany(
+            mappedBy = "naprawy",
+            fetch = FetchType.EAGER
+    )
     private final List<Osoba> osoby = new ArrayList<>();
     @OneToMany(
             mappedBy = "naprawa",
@@ -191,5 +194,10 @@ public class Naprawa {
 
     public void setKoszt(Double koszt) {
         this.koszt = koszt;
+    }
+
+    @Override
+    public String toString() {
+        return getId()+" "+getOpis();
     }
 }

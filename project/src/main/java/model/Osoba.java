@@ -28,7 +28,10 @@ public class Osoba extends Klient{
     private final List<Zatrudnienie> zatrudnienia = new ArrayList<>();
     @ElementCollection
     private Set<TypyOsoby> typyOsob = null;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
     @JoinTable(
             name = "Osoba_Naprawa",
             joinColumns = { @JoinColumn(name = "osobaId") },
@@ -225,6 +228,10 @@ public class Osoba extends Klient{
         return nazwisko;
     }
 
+    public List<Naprawa> getNaprawy() {
+        return naprawy;
+    }
+
     public void setNazwisko(String nazwisko) {
         this.nazwisko = nazwisko;
     }
@@ -280,39 +287,43 @@ public class Osoba extends Klient{
 
     @Override
     public String toString() {
-        if(typyOsob.contains(TypyOsoby.PRACOWNIK) && !typyOsob.contains(TypyOsoby.KLIENT_INDYWIDUALNY))
-            return "Pracownik{" +
-                    "id=" + id +
-                    ", imie='" + imie + '\'' +
-                    ", nazwisko='" + nazwisko + '\'' +
-                    ", numerTelefonu=" + numerTelefonu +
-                    ", stawkaGodzinowa=" + stawkaGodzinowa +
-                    ", PESEL=" + PESEL +
-                    '}';
-        else if(typyOsob.contains(TypyOsoby.KLIENT_INDYWIDUALNY) && !typyOsob.contains(TypyOsoby.PRACOWNIK)) {
-            try {
-                return "KlientIndywidualny{" +
-                        "id=" + id +
-                        ", imie='" + imie + '\'' +
-                        ", nazwisko='" + nazwisko + '\'' +
-                        ", numerTelefonu=" + numerTelefonu +
-                        ", numerKlienta=" + super.getNumerKlienta() +
-                        '}';
-            } catch (Exception ignored) { }
-        }
-        else {
-            try {
-                return "PracownikKlientIndywidualny{" +
-                        "id=" + id +
-                        ", imie='" + imie + '\'' +
-                        ", nazwisko='" + nazwisko + '\'' +
-                        ", numerTelefonu=" + numerTelefonu +
-                        ", stawkaGodzinowa=" + stawkaGodzinowa +
-                        ", PESEL=" + PESEL +
-                        ", numerKlienta=" + super.getNumerKlienta() +
-                        '}';
-            } catch (Exception ignored) { }
-        }
-        return null;
+        return  getImie()+" "+getNazwisko();
     }
+    //    @Override
+//    public String toString() {
+//        if(typyOsob.contains(TypyOsoby.PRACOWNIK) && !typyOsob.contains(TypyOsoby.KLIENT_INDYWIDUALNY))
+//            return "Pracownik{" +
+//                    "id=" + id +
+//                    ", imie='" + imie + '\'' +
+//                    ", nazwisko='" + nazwisko + '\'' +
+//                    ", numerTelefonu=" + numerTelefonu +
+//                    ", stawkaGodzinowa=" + stawkaGodzinowa +
+//                    ", PESEL=" + PESEL +
+//                    '}';
+//        else if(typyOsob.contains(TypyOsoby.KLIENT_INDYWIDUALNY) && !typyOsob.contains(TypyOsoby.PRACOWNIK)) {
+//            try {
+//                return "KlientIndywidualny{" +
+//                        "id=" + id +
+//                        ", imie='" + imie + '\'' +
+//                        ", nazwisko='" + nazwisko + '\'' +
+//                        ", numerTelefonu=" + numerTelefonu +
+//                        ", numerKlienta=" + super.getNumerKlienta() +
+//                        '}';
+//            } catch (Exception ignored) { }
+//        }
+//        else {
+//            try {
+//                return "PracownikKlientIndywidualny{" +
+//                        "id=" + id +
+//                        ", imie='" + imie + '\'' +
+//                        ", nazwisko='" + nazwisko + '\'' +
+//                        ", numerTelefonu=" + numerTelefonu +
+//                        ", stawkaGodzinowa=" + stawkaGodzinowa +
+//                        ", PESEL=" + PESEL +
+//                        ", numerKlienta=" + super.getNumerKlienta() +
+//                        '}';
+//            } catch (Exception ignored) { }
+//        }
+//        return null;
+//    }
 }
