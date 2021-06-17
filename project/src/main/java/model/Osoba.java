@@ -9,10 +9,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
-enum TypyOsoby {PRACOWNIK, KLIENT_INDYWIDUALNY}
-
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Osoba extends Klient{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +36,7 @@ public class Osoba extends Klient{
     )
     private final List<Naprawa> naprawy = new ArrayList<>();
 
-//    Konstruktor pracownika
+    //    Konstruktor pracownika
     public Osoba(String imie, String nazwisko, int numerTelefonu, Double stawkaGodzinowa, Long PESEL) {
         this.imie = imie;
         this.nazwisko = nazwisko;
@@ -69,8 +66,11 @@ public class Osoba extends Klient{
         typyOsob = EnumSet.of(TypyOsoby.PRACOWNIK,TypyOsoby.KLIENT_INDYWIDUALNY);
     }
 
-    public void dodajZatrudnienie(Zatrudnienie zatrudnienie)
-    {
+    public void dodajZatrudnienie(Zatrudnienie zatrudnienie) throws Exception {
+        if(!typyOsob.contains(TypyOsoby.PRACOWNIK))
+        {
+            throw new Exception("Ta osoba nie jest pracownikiem!");
+        }
         if(!zatrudnienia.contains(zatrudnienie))
         {
             zatrudnienia.add(zatrudnienie);
@@ -79,8 +79,11 @@ public class Osoba extends Klient{
     }
 
 
-    public void usunZatrudnienie(Zatrudnienie zatrudnienie)
-    {
+    public void usunZatrudnienie(Zatrudnienie zatrudnienie) throws Exception {
+        if(!typyOsob.contains(TypyOsoby.PRACOWNIK))
+        {
+            throw new Exception("Ta osoba nie jest pracownikiem!");
+        }
         if(zatrudnienia.contains(zatrudnienie))
         {
             zatrudnienia.remove(zatrudnienie);
@@ -88,8 +91,11 @@ public class Osoba extends Klient{
         }
     }
 
-    public void dodajNaprawe(Naprawa naprawa)
-    {
+    public void dodajNaprawe(Naprawa naprawa) throws Exception {
+        if(!typyOsob.contains(TypyOsoby.PRACOWNIK))
+        {
+            throw new Exception("Ta osoba nie jest pracownikiem!");
+        }
         if(!naprawy.contains(naprawa))
         {
             naprawy.add(naprawa);
@@ -97,8 +103,11 @@ public class Osoba extends Klient{
         }
     }
 
-    public void usunNaprawe(Naprawa naprawa)
-    {
+    public void usunNaprawe(Naprawa naprawa) throws Exception {
+        if(!typyOsob.contains(TypyOsoby.PRACOWNIK))
+        {
+            throw new Exception("Ta osoba nie jest pracownikiem!");
+        }
         if(naprawy.contains(naprawa))
         {
             naprawy.remove(naprawa);
@@ -253,7 +262,7 @@ public class Osoba extends Klient{
 
     @Override
     public String toString() {
-        if(typyOsob.contains(TypyOsoby.PRACOWNIK))
+        if(typyOsob.contains(TypyOsoby.PRACOWNIK) && !typyOsob.contains(TypyOsoby.KLIENT_INDYWIDUALNY))
             return "Pracownik{" +
                     "id=" + id +
                     ", imie='" + imie + '\'' +
@@ -262,7 +271,7 @@ public class Osoba extends Klient{
                     ", stawkaGodzinowa=" + stawkaGodzinowa +
                     ", PESEL=" + PESEL +
                     '}';
-        else if(typyOsob.contains(TypyOsoby.KLIENT_INDYWIDUALNY)) {
+        else if(typyOsob.contains(TypyOsoby.KLIENT_INDYWIDUALNY) && !typyOsob.contains(TypyOsoby.PRACOWNIK)) {
             try {
                 return "KlientIndywidualny{" +
                         "id=" + id +

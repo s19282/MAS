@@ -45,8 +45,11 @@ public class Naprawa {
     public Naprawa() {
     }
 
-    public void dodajOsobe(Osoba osoba)
-    {
+    public void dodajOsobe(Osoba osoba) throws Exception {
+        if(!osoba.getTypyOsob().contains(TypyOsoby.PRACOWNIK))
+        {
+            throw new Exception("Ta osoba nie jest pracownikiem!");
+        }
         if(!osoby.contains(osoba))
         {
             osoby.add(osoba);
@@ -54,8 +57,11 @@ public class Naprawa {
         }
     }
 
-    public void usunOsobe(Osoba osoba)
-    {
+    public void usunOsobe(Osoba osoba) throws Exception {
+        if(!osoba.getTypyOsob().contains(TypyOsoby.PRACOWNIK))
+        {
+            throw new Exception("Ta osoba nie jest pracownikiem!");
+        }
         if(osoby.contains(osoba))
         {
             osoby.remove(osoba);

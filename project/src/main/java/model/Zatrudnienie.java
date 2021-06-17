@@ -25,8 +25,16 @@ public class Zatrudnienie {
         this.pensja = pensja;
     }
 
-    public void dodajOsobe(Osoba osoba)
-    {
+    public Zatrudnienie(LocalDate dataZatrudnienia, Double pensja) {
+        this.dataZatrudnienia = dataZatrudnienia;
+        this.pensja = pensja;
+    }
+
+    public void dodajOsobe(Osoba osoba) throws Exception {
+        if(!osoba.getTypyOsob().contains(TypyOsoby.PRACOWNIK))
+        {
+            throw new Exception("Ta osoba nie jest pracownikiem!");
+        }
         if(this.osoba != null)
         {
             if(this.osoba != osoba)
@@ -43,8 +51,7 @@ public class Zatrudnienie {
         }
     }
 
-    public void usunOsobe()
-    {
+    public void usunOsobe() throws Exception {
         if(osoba.getZatrudnienia().contains(this))
             osoba.usunZatrudnienie(this);
 
