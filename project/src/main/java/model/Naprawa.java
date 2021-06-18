@@ -37,6 +37,10 @@ public class Naprawa {
     @ManyToOne
     private Wizyta wizyta;
 
+    public List<Osoba> getOsoby() {
+        return osoby;
+    }
+
     public Naprawa(String nazwaPodzespolu, String opis, LocalTime czasTrwania, Double koszt) {
         this.nazwaPodzespolu = nazwaPodzespolu;
         this.opis = opis;

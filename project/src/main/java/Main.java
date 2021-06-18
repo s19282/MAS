@@ -38,11 +38,24 @@ public class Main
 
         JList<String> lista = new JList<>(new String[] {"Element1","Element2","Element3"});
 
+        MyHelper helper = new MyHelper();
         pracownicy.addActionListener(e -> {
-            try {
-                System.out.println(pracownicyZBazy.get(pracownicy.getSelectedIndex()).getNaprawy());
-            } catch (Exception exception) {
-                exception.printStackTrace();
+            if(!helper.isRunning())
+            {
+                helper.setRunning(true);
+                naprawy.removeAllItems();
+                pracownicyZBazy.get(pracownicy.getSelectedIndex()).getNaprawy().forEach(naprawy::addItem);
+                helper.setRunning(false);
+            }
+        });
+
+        naprawy.addActionListener(e -> {
+            if(!helper.isRunning())
+            {
+                helper.setRunning(true);
+                pracownicy.removeAllItems();
+                naprawyZBazy.get(naprawy.getSelectedIndex()).getOsoby().forEach(pracownicy::addItem);
+                helper.setRunning(false);
             }
         });
 
