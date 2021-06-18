@@ -19,14 +19,16 @@ import java.util.stream.Collectors;
 public class Main
 {
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Warsztat samochodowy");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800,600);
-        frame.setResizable(false);
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Warsztat samochodowy");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(800,600);
+            frame.setResizable(false);
 
-        listaNaprawWersja2(frame);
+            listaNaprawWersja2(frame);
 
-        frame.setVisible(true);
+            frame.setVisible(true);
+        });
     }
 
     public static void listaNaprawWersja2(JFrame frame)
@@ -196,18 +198,57 @@ public class Main
             }
         });
 
+        GridBagConstraints c = new GridBagConstraints();
         JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        panel.add(pracownicyLabel);
-        panel.add(pracownicy);
-        panel.add(naprawyLabel);
-        panel.add(naprawy);
-        frame.setLayout(new GridLayout(4,1));
-//        frame.add(listaNapraw, BorderLayout.NORTH);
-        frame.add(naglowekLabel);
-        frame.add(panel);
-        frame.add(lista);
-//        frame.add(lista, BorderLayout.CENTER);
+        panel.setLayout(new GridBagLayout());
+
+        c.gridx = 0;
+        c.gridy = 0;
+        panel.add(pracownicyLabel, c);
+
+        c.gridx = 1;
+        c.gridy = 0;
+        panel.add(pracownicy, c);
+
+        c.gridx = 0;
+        c.gridy = 1;
+        panel.add(naprawyLabel, c);
+
+        c.gridx = 1;
+        c.gridy = 1;
+        panel.add(naprawy, c);
+        frame.setLayout(new GridBagLayout());
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.weighty = 0.3;
+        c.gridx = 0;
+        c.gridy = 0;
+        frame.add(naglowekLabel,c);
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.WEST;
+        c.weightx = 0.5;
+        c.weighty = 0.3;
+        c.gridx = 0;
+        c.gridy = 1;
+        frame.add(panel,c);
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.weighty = 0.6;
+        c.gridx = 0;
+        c.gridy = 2;
+        frame.add(lista,c);
+
+        naglowekLabel.setFont(new Font("Serif", Font.PLAIN, 40));
+        naglowekLabel.setOpaque(true);
+        naglowekLabel.setHorizontalAlignment(JLabel.CENTER);
+        panel.setBackground(Color.decode("#8ff486"));
+        frame.setBackground(Color.decode("#8ff486"));
+        frame.setVisible(true);
+        naglowekLabel.setBackground(Color.decode("#8ff486"));
+        lista.setBackground(Color.decode("#8ff486"));
     }
 
     private static Naprawa naprawaZeStringa(Set<Naprawa> unikalneNaprawy, JComboBox<String> naprawy) {
@@ -224,7 +265,6 @@ public class Main
         listModel.clear();
         try {
             Osoba pracownik = pracownicyZBazy.get(pracownicy.getSelectedIndex()-1);
-//TODO: sprawdzić indeksy
             try{
                 listModel.addElement(pracownik.szczegolyPracownika()+"\n"+pracownik
                         .getNaprawy().get(naprawy.getSelectedIndex()-1).szczegolyNaprawy());
@@ -317,163 +357,163 @@ public class Main
 
     public static void listaNapraw(JFrame frame)
     {
-        List<Osoba> pracownicyZBazy = pobierzPracownikowZBazy();
-        List<Naprawa> naprawyZBazy = pobierzNaprawyZBazy();
-        JLabel naglowekLabel = new JLabel("Lista napraw");
-        JLabel pracownicyLabel = new JLabel("Pracownicy: ");
-//        JLabel szczegolyNaprawy = new JLabel();
-        JComboBox<String> pracownicy = new JComboBox<>(new String[]{"Wszyscy pracownicy"});
-        pracownicyZBazy.forEach(p -> pracownicy.addItem(p.toString()));
-//        JComboBox<Osoba> pracownicy = new JComboBox<>(pracownicyZBazy.toArray(Osoba[]::new));
-        JLabel naprawyLabel = new JLabel("Naprawy: ");
-        JComboBox<String> naprawy = new JComboBox<>(new String[]{"Wszystkie naprawy"});
-        naprawyZBazy.forEach(n -> naprawy.addItem(n.toString()));
-//        JComboBox<Naprawa> naprawy = new JComboBox<>(naprawyZBazy.toArray(Naprawa[]::new));
-        MyCellRenderer cellRenderer = new MyCellRenderer(600);
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        naprawyZBazy.forEach(n->listModel.addElement(n.toString()));
-        JList<String> lista = new JList<>(listModel);
-        lista.setCellRenderer(cellRenderer);
-
-        MyHelper helper = new MyHelper();
-        pracownicy.addActionListener(e -> {
-            if(!helper.isRunning()) // Zabezpieczenie przeciwko zapętleniu
-            {
-                helper.setRunning(true);
-
-//                naprawy.removeAllItems();
-//                naprawy.addItem("Wszystkie naprawy");
-
-                if(pracownicy.getSelectedIndex() == 0)
-                {
-                    pracownicy.removeAllItems();
-                    pracownicy.addItem("Wszyscy pracownicy");
-//                    pracownicyZBazy.forEach(p -> pracownicy.addItem(p.toString()));
-
-                    listModel.clear();
-                    if(naprawy.getSelectedIndex() == 0)
-                    {
-                        pracownicyZBazy.forEach(p -> pracownicy.addItem(p.toString()));
-                        naprawyZBazy.forEach(n->listModel.addElement(n.toString()));
-                    }
-                    else
-                    {
-                        pracownicyZBazy.forEach(p -> {
-                            try {
-                                if(p.getNaprawy().contains(naprawyZBazy.get(naprawy.getSelectedIndex()-1)))
-                                {
-                                    pracownicy.addItem(p.toString());
-                                }
-                            } catch (Exception exception) {
-                                exception.printStackTrace();
-                            }
-                        });
-                        naprawyZBazy.get(naprawy.getSelectedIndex()-1).getOsoby().forEach(o -> {
-                            try {
-                                listModel.addElement(o.toString());
-                            } catch (Exception exception) {
-                                exception.printStackTrace();
-                            }
-                        });
-                    }
-                }
-                else
-                {
-                    if(naprawy.getSelectedIndex() != 0)
-                    {
-                        naprawaSzczegoly(pracownicyZBazy, naglowekLabel, pracownicy, naprawy, listModel);
-                    }
-                    else
-                    {
-                        naprawy.removeAllItems();
-                        naprawy.addItem("Wszystkie naprawy");
-
-                        naglowekLabel.setText("Naprawy wykonane przez pracownika : "+pracownicyZBazy.get(pracownicy.getSelectedIndex()-1).getId());
-                        listModel.clear();
-                        try {
-                            pracownicyZBazy.get(pracownicy.getSelectedIndex()-1).getNaprawy().forEach(n-> listModel.addElement(n.toString()));
-                            pracownicyZBazy.get(pracownicy.getSelectedIndex()-1).getNaprawy().forEach(n-> naprawy.addItem(n.toString()));
-                        } catch (Exception exception) {
-                            exception.printStackTrace();
-                        }
-                    }
-                }
-
-                helper.setRunning(false);
-            }
-        });
-
-        naprawy.addActionListener(e -> {
-            if(!helper.isRunning())
-            {
-                helper.setRunning(true);
-
-//                pracownicy.removeAllItems();
-//                pracownicy.addItem("Wszyscy pracownicy");
-
-                if(naprawy.getSelectedIndex() == 0)
-                {
-                    naprawy.removeAllItems();
-                    naprawy.addItem("Wszystkie naprawy");
-
-                    listModel.clear();
-                    if(pracownicy.getSelectedIndex() == 0)
-                    {
-                        naprawyZBazy.forEach(n -> naprawy.addItem(n.toString()));
-                        pracownicyZBazy.forEach(p->listModel.addElement(p.toString()));
-                    }
-                    else
-                    {
-                        try {
-                            naprawyZBazy.forEach(n -> {
-                                try {
-                                    if(n.getOsoby().contains(pracownicyZBazy.get(pracownicy.getSelectedIndex()-1)))
-                                    {
-                                        naprawy.addItem(n.toString());
-                                    }
-                                } catch (Exception exception) {
-                                    exception.printStackTrace();
-                                }
-                            });
-                            pracownicyZBazy.get(pracownicy.getSelectedIndex()-1).getNaprawy()
-                                    .forEach(o -> listModel.addElement(o.toString()));
-                        } catch (Exception exception) {
-                            exception.printStackTrace();
-                        }
-                    }
-                }
-                else
-                {
-                    if(pracownicy.getSelectedIndex() != 0)
-                    {
-                        naprawaSzczegoly(pracownicyZBazy, naglowekLabel, pracownicy, naprawy, listModel);
-                    }
-                    else {
-                        pracownicy.removeAllItems();
-                        pracownicy.addItem("Wszyscy pracownicy");
-
-                        naglowekLabel.setText("Pracownicy wykonujący naprawę numer: " + naprawyZBazy.get(naprawy.getSelectedIndex() - 1).getId());
-                        listModel.clear();
-                        naprawyZBazy.get(naprawy.getSelectedIndex() - 1).getOsoby().forEach(p -> listModel.addElement(p.toString()));
-                        naprawyZBazy.get(naprawy.getSelectedIndex() - 1).getOsoby().forEach(p -> pracownicy.addItem(p.toString()));
-                    }
-                }
-
-                helper.setRunning(false);
-            }
-        });
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        panel.add(pracownicyLabel);
-        panel.add(pracownicy);
-        panel.add(naprawyLabel);
-        panel.add(naprawy);
-        frame.setLayout(new GridLayout(4,1));
-//        frame.add(listaNapraw, BorderLayout.NORTH);
-        frame.add(naglowekLabel);
-        frame.add(panel);
-        frame.add(lista);
-//        frame.add(lista, BorderLayout.CENTER);
+//        List<Osoba> pracownicyZBazy = pobierzPracownikowZBazy();
+//        List<Naprawa> naprawyZBazy = pobierzNaprawyZBazy();
+//        JLabel naglowekLabel = new JLabel("Lista napraw");
+//        JLabel pracownicyLabel = new JLabel("Pracownicy: ");
+////        JLabel szczegolyNaprawy = new JLabel();
+//        JComboBox<String> pracownicy = new JComboBox<>(new String[]{"Wszyscy pracownicy"});
+//        pracownicyZBazy.forEach(p -> pracownicy.addItem(p.toString()));
+////        JComboBox<Osoba> pracownicy = new JComboBox<>(pracownicyZBazy.toArray(Osoba[]::new));
+//        JLabel naprawyLabel = new JLabel("Naprawy: ");
+//        JComboBox<String> naprawy = new JComboBox<>(new String[]{"Wszystkie naprawy"});
+//        naprawyZBazy.forEach(n -> naprawy.addItem(n.toString()));
+////        JComboBox<Naprawa> naprawy = new JComboBox<>(naprawyZBazy.toArray(Naprawa[]::new));
+//        MyCellRenderer cellRenderer = new MyCellRenderer(600);
+//        DefaultListModel<String> listModel = new DefaultListModel<>();
+//        naprawyZBazy.forEach(n->listModel.addElement(n.toString()));
+//        JList<String> lista = new JList<>(listModel);
+//        lista.setCellRenderer(cellRenderer);
+//
+//        MyHelper helper = new MyHelper();
+//        pracownicy.addActionListener(e -> {
+//            if(!helper.isRunning()) // Zabezpieczenie przeciwko zapętleniu
+//            {
+//                helper.setRunning(true);
+//
+////                naprawy.removeAllItems();
+////                naprawy.addItem("Wszystkie naprawy");
+//
+//                if(pracownicy.getSelectedIndex() == 0)
+//                {
+//                    pracownicy.removeAllItems();
+//                    pracownicy.addItem("Wszyscy pracownicy");
+////                    pracownicyZBazy.forEach(p -> pracownicy.addItem(p.toString()));
+//
+//                    listModel.clear();
+//                    if(naprawy.getSelectedIndex() == 0)
+//                    {
+//                        pracownicyZBazy.forEach(p -> pracownicy.addItem(p.toString()));
+//                        naprawyZBazy.forEach(n->listModel.addElement(n.toString()));
+//                    }
+//                    else
+//                    {
+//                        pracownicyZBazy.forEach(p -> {
+//                            try {
+//                                if(p.getNaprawy().contains(naprawyZBazy.get(naprawy.getSelectedIndex()-1)))
+//                                {
+//                                    pracownicy.addItem(p.toString());
+//                                }
+//                            } catch (Exception exception) {
+//                                exception.printStackTrace();
+//                            }
+//                        });
+//                        naprawyZBazy.get(naprawy.getSelectedIndex()-1).getOsoby().forEach(o -> {
+//                            try {
+//                                listModel.addElement(o.toString());
+//                            } catch (Exception exception) {
+//                                exception.printStackTrace();
+//                            }
+//                        });
+//                    }
+//                }
+//                else
+//                {
+//                    if(naprawy.getSelectedIndex() != 0)
+//                    {
+//                        naprawaSzczegoly(pracownicyZBazy, naglowekLabel, pracownicy, naprawy, listModel);
+//                    }
+//                    else
+//                    {
+//                        naprawy.removeAllItems();
+//                        naprawy.addItem("Wszystkie naprawy");
+//
+//                        naglowekLabel.setText("Naprawy wykonane przez pracownika : "+pracownicyZBazy.get(pracownicy.getSelectedIndex()-1).getId());
+//                        listModel.clear();
+//                        try {
+//                            pracownicyZBazy.get(pracownicy.getSelectedIndex()-1).getNaprawy().forEach(n-> listModel.addElement(n.toString()));
+//                            pracownicyZBazy.get(pracownicy.getSelectedIndex()-1).getNaprawy().forEach(n-> naprawy.addItem(n.toString()));
+//                        } catch (Exception exception) {
+//                            exception.printStackTrace();
+//                        }
+//                    }
+//                }
+//
+//                helper.setRunning(false);
+//            }
+//        });
+//
+//        naprawy.addActionListener(e -> {
+//            if(!helper.isRunning())
+//            {
+//                helper.setRunning(true);
+//
+////                pracownicy.removeAllItems();
+////                pracownicy.addItem("Wszyscy pracownicy");
+//
+//                if(naprawy.getSelectedIndex() == 0)
+//                {
+//                    naprawy.removeAllItems();
+//                    naprawy.addItem("Wszystkie naprawy");
+//
+//                    listModel.clear();
+//                    if(pracownicy.getSelectedIndex() == 0)
+//                    {
+//                        naprawyZBazy.forEach(n -> naprawy.addItem(n.toString()));
+//                        pracownicyZBazy.forEach(p->listModel.addElement(p.toString()));
+//                    }
+//                    else
+//                    {
+//                        try {
+//                            naprawyZBazy.forEach(n -> {
+//                                try {
+//                                    if(n.getOsoby().contains(pracownicyZBazy.get(pracownicy.getSelectedIndex()-1)))
+//                                    {
+//                                        naprawy.addItem(n.toString());
+//                                    }
+//                                } catch (Exception exception) {
+//                                    exception.printStackTrace();
+//                                }
+//                            });
+//                            pracownicyZBazy.get(pracownicy.getSelectedIndex()-1).getNaprawy()
+//                                    .forEach(o -> listModel.addElement(o.toString()));
+//                        } catch (Exception exception) {
+//                            exception.printStackTrace();
+//                        }
+//                    }
+//                }
+//                else
+//                {
+//                    if(pracownicy.getSelectedIndex() != 0)
+//                    {
+//                        naprawaSzczegoly(pracownicyZBazy, naglowekLabel, pracownicy, naprawy, listModel);
+//                    }
+//                    else {
+//                        pracownicy.removeAllItems();
+//                        pracownicy.addItem("Wszyscy pracownicy");
+//
+//                        naglowekLabel.setText("Pracownicy wykonujący naprawę numer: " + naprawyZBazy.get(naprawy.getSelectedIndex() - 1).getId());
+//                        listModel.clear();
+//                        naprawyZBazy.get(naprawy.getSelectedIndex() - 1).getOsoby().forEach(p -> listModel.addElement(p.toString()));
+//                        naprawyZBazy.get(naprawy.getSelectedIndex() - 1).getOsoby().forEach(p -> pracownicy.addItem(p.toString()));
+//                    }
+//                }
+//
+//                helper.setRunning(false);
+//            }
+//        });
+//
+//        JPanel panel = new JPanel();
+//        panel.setLayout(new FlowLayout());
+//        panel.add(pracownicyLabel);
+//        panel.add(pracownicy);
+//        panel.add(naprawyLabel);
+//        panel.add(naprawy);
+//        frame.setLayout(new GridLayout(4,1));
+////        frame.add(listaNapraw, BorderLayout.NORTH);
+//        frame.add(naglowekLabel);
+//        frame.add(panel);
+//        frame.add(lista);
+////        frame.add(lista, BorderLayout.CENTER);
     }
 }
