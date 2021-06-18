@@ -30,21 +30,41 @@ public class Main
     {
         List<Osoba> pracownicyZBazy = pobierzPracownikowZBazy();
         List<Naprawa> naprawyZBazy = pobierzNaprawyZBazy();
-        JLabel listaNaprawLabel = new JLabel("Lista napraw");
+        JLabel naglowekLabel = new JLabel("Lista napraw");
         JLabel pracownicyLabel = new JLabel("Pracownicy: ");
-        JComboBox<Osoba> pracownicy = new JComboBox<>(pracownicyZBazy.toArray(Osoba[]::new));
+        JComboBox<String> pracownicy = new JComboBox<>(new String[]{"Wszyscy pracownicy"});
+        pracownicyZBazy.forEach(p -> pracownicy.addItem(p.toString()));
+//        JComboBox<Osoba> pracownicy = new JComboBox<>(pracownicyZBazy.toArray(Osoba[]::new));
         JLabel naprawyLabel = new JLabel("Naprawy: ");
-        JComboBox<Naprawa> naprawy = new JComboBox<>(naprawyZBazy.toArray(Naprawa[]::new));
+        JComboBox<String> naprawy = new JComboBox<>(new String[]{"Wszystkie naprawy"});
+        naprawyZBazy.forEach(n -> naprawy.addItem(n.toString()));
+//        JComboBox<Naprawa> naprawy = new JComboBox<>(naprawyZBazy.toArray(Naprawa[]::new));
 
-        JList<String> lista = new JList<>(new String[] {"Element1","Element2","Element3"});
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        naprawyZBazy.forEach(n->listModel.addElement(n.toString()));
+        JList<String> lista = new JList<>(listModel);
 
         MyHelper helper = new MyHelper();
         pracownicy.addActionListener(e -> {
             if(!helper.isRunning())
             {
                 helper.setRunning(true);
+
                 naprawy.removeAllItems();
-                pracownicyZBazy.get(pracownicy.getSelectedIndex()).getNaprawy().forEach(naprawy::addItem);
+                naprawy.addItem("Wszystkie naprawy");
+
+                if(pracownicy.getSelectedIndex() == 0)
+                {
+                    pracownicyZBazy.forEach(p -> pracownicy.addItem(p.toString()));
+                }
+                else
+                {
+                    naglowekLabel.setText("Naprawy wykonane przez pracownika : "+pracownicyZBazy.get(pracownicy.getSelectedIndex()-1).getId());
+                    listModel.clear();
+                    pracownicyZBazy.get(pracownicy.getSelectedIndex()-1).getNaprawy().forEach(n-> listModel.addElement(n.toString()));
+                    pracownicyZBazy.get(pracownicy.getSelectedIndex()-1).getNaprawy().forEach(n-> naprawy.addItem(n.toString()));
+                }
+
                 helper.setRunning(false);
             }
         });
@@ -53,8 +73,22 @@ public class Main
             if(!helper.isRunning())
             {
                 helper.setRunning(true);
+
                 pracownicy.removeAllItems();
-                naprawyZBazy.get(naprawy.getSelectedIndex()).getOsoby().forEach(pracownicy::addItem);
+                pracownicy.addItem("Wszyscy pracownicy");
+
+                if(naprawy.getSelectedIndex() == 0)
+                {
+                    naprawyZBazy.forEach(n -> naprawy.addItem(n.toString()));
+                }
+                else
+                {
+                    naglowekLabel.setText("Pracownicy wykonujący naprawę numer: "+naprawyZBazy.get(naprawy.getSelectedIndex()-1).getId());
+                    listModel.clear();
+                    naprawyZBazy.get(naprawy.getSelectedIndex()-1).getOsoby().forEach(p -> listModel.addElement(p.toString()));
+                    naprawyZBazy.get(naprawy.getSelectedIndex()-1).getOsoby().forEach(p -> pracownicy.addItem(p.toString()));
+                }
+
                 helper.setRunning(false);
             }
         });
@@ -67,7 +101,7 @@ public class Main
         panel.add(naprawy);
         frame.setLayout(new GridLayout(4,1));
 //        frame.add(listaNapraw, BorderLayout.NORTH);
-        frame.add(listaNaprawLabel);
+        frame.add(naglowekLabel);
         frame.add(panel);
         frame.add(lista);
 //        frame.add(lista, BorderLayout.CENTER);
