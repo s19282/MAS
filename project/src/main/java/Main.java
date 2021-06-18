@@ -202,6 +202,14 @@ public class Main
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
 
+
+        pracownicyLabel.setBackground(Color.RED);
+        pracownicyLabel.setOpaque(true);
+
+
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        c.weightx = 1;
+        c.insets = new Insets(10,10,10,10);
         c.gridx = 0;
         c.gridy = 0;
         panel.add(pracownicyLabel, c);
@@ -219,24 +227,19 @@ public class Main
         panel.add(naprawy, c);
         frame.setLayout(new GridBagLayout());
 
+        c = new GridBagConstraints();
+
+        c.weighty = 1;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
-        c.weighty = 0.3;
         c.gridx = 0;
         c.gridy = 0;
         frame.add(naglowekLabel,c);
 
-        c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.WEST;
-        c.weightx = 0.5;
-        c.weighty = 0.3;
         c.gridx = 0;
         c.gridy = 1;
         frame.add(panel,c);
 
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
-        c.weighty = 0.6;
         c.gridx = 0;
         c.gridy = 2;
         frame.add(lista,c);
