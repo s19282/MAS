@@ -49,7 +49,7 @@ public class Main
 
         MyHelper helper = new MyHelper();
         pracownicy.addActionListener(e -> {
-            if(!helper.isRunning())
+            if(!helper.isRunning()) // Zabezpieczenie przeciwko zapętleniu
             {
                 helper.setRunning(true);
 
@@ -58,7 +58,36 @@ public class Main
 
                 if(pracownicy.getSelectedIndex() == 0)
                 {
-                    pracownicyZBazy.forEach(p -> pracownicy.addItem(p.toString()));
+                    pracownicy.removeAllItems();
+                    pracownicy.addItem("Wszyscy pracownicy");
+//                    pracownicyZBazy.forEach(p -> pracownicy.addItem(p.toString()));
+
+                    listModel.clear();
+                    if(naprawy.getSelectedIndex() == 0)
+                    {
+                        pracownicyZBazy.forEach(p -> pracownicy.addItem(p.toString()));
+                        naprawyZBazy.forEach(n->listModel.addElement(n.toString()));
+                    }
+                    else
+                    {
+                        pracownicyZBazy.forEach(p -> {
+                            try {
+                                if(p.getNaprawy().contains(naprawyZBazy.get(naprawy.getSelectedIndex()-1)))
+                                {
+                                    pracownicy.addItem(p.toString());
+                                }
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
+                            }
+                        });
+                        naprawyZBazy.get(naprawy.getSelectedIndex()-1).getOsoby().forEach(o -> {
+                            try {
+                                listModel.addElement(o.toString());
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
+                            }
+                        });
+                    }
                 }
                 else
                 {
@@ -96,7 +125,34 @@ public class Main
 
                 if(naprawy.getSelectedIndex() == 0)
                 {
-                    naprawyZBazy.forEach(n -> naprawy.addItem(n.toString()));
+                    naprawy.removeAllItems();
+                    naprawy.addItem("Wszystkie naprawy");
+
+                    listModel.clear();
+                    if(pracownicy.getSelectedIndex() == 0)
+                    {
+                        naprawyZBazy.forEach(n -> naprawy.addItem(n.toString()));
+                        pracownicyZBazy.forEach(p->listModel.addElement(p.toString()));
+                    }
+                    else
+                    {
+                        try {
+                            naprawyZBazy.forEach(n -> {
+                                try {
+                                    if(n.getOsoby().contains(pracownicyZBazy.get(pracownicy.getSelectedIndex()-1)))
+                                    {
+                                        naprawy.addItem(n.toString());
+                                    }
+                                } catch (Exception exception) {
+                                    exception.printStackTrace();
+                                }
+                            });
+                            pracownicyZBazy.get(pracownicy.getSelectedIndex()-1).getNaprawy()
+                                    .forEach(o -> listModel.addElement(o.toString()));
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
+                    }
                 }
                 else
                 {
@@ -139,8 +195,11 @@ public class Main
         try {
             Osoba pracownik = pracownicyZBazy.get(pracownicy.getSelectedIndex()-1);
 //TODO: sprawdzić indeksy
-            listModel.addElement(pracownik.szczegolyPracownika()+"\n"+pracownik
-                    .getNaprawy().get(naprawy.getSelectedIndex()-1).szczegolyNaprawy());
+            try{
+                listModel.addElement(pracownik.szczegolyPracownika()+"\n"+pracownik
+                        .getNaprawy().get(naprawy.getSelectedIndex()-1).szczegolyNaprawy());
+            }
+            catch (IndexOutOfBoundsException ignored){}
 
         } catch (Exception exception) {
             exception.printStackTrace();

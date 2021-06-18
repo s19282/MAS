@@ -26,7 +26,7 @@ public class Osoba extends Klient{
             orphanRemoval = true
     )
     private final List<Zatrudnienie> zatrudnienia = new ArrayList<>();
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<TypyOsoby> typyOsob = null;
     @ManyToMany(
             cascade = CascadeType.ALL,

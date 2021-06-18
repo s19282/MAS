@@ -206,6 +206,6 @@ public class Naprawa {
 
     @Override
     public String toString() {
-        return "Id: "+getId()+", "+getNazwaPodzespolu();
+        return "Id naprawy: "+getId()+", "+getNazwaPodzespolu();
     }
 }
