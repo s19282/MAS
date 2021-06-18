@@ -193,7 +193,11 @@ public class Osoba extends Klient{
 //        }
 //    }
 
-    public List<Zatrudnienie> getZatrudnienia() {
+    public List<Zatrudnienie> getZatrudnienia() throws Exception {
+        if(!typyOsob.contains(TypyOsoby.PRACOWNIK))
+        {
+            throw new Exception("Ta osoba nie jest pracownikiem!");
+        }
         return zatrudnienia;
     }
 
@@ -228,7 +232,11 @@ public class Osoba extends Klient{
         return nazwisko;
     }
 
-    public List<Naprawa> getNaprawy() {
+    public List<Naprawa> getNaprawy() throws Exception {
+        if(!typyOsob.contains(TypyOsoby.PRACOWNIK))
+        {
+            throw new Exception("Ta osoba nie jest pracownikiem!");
+        }
         return naprawy;
     }
 
@@ -285,9 +293,17 @@ public class Osoba extends Klient{
         }
     }
 
+    public String szczegolyPracownika() throws Exception {
+        if(!typyOsob.contains(TypyOsoby.PRACOWNIK))
+        {
+            throw new Exception("Ta osoba nie jest pracownikiem!");
+        }
+        return "Imie: "+getImie()+" "+" Nazwisko: "+getNazwisko()+" Numer pracownika: "+getId();
+    }
+
     @Override
     public String toString() {
-        return  getImie()+" "+getNazwisko();
+        return  "Id: "+getId()+", "+getImie();
     }
     //    @Override
 //    public String toString() {

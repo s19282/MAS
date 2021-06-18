@@ -199,9 +199,13 @@ public class Naprawa {
     public void setKoszt(Double koszt) {
         this.koszt = koszt;
     }
+    public String szczegolyNaprawy()
+    {
+        return "Id: "+getId()+" Nazwa podzespołu: "+getNazwaPodzespolu()+" Opis: "+getOpis()+" Czas trwania: "+getCzasTrwania()+" Stan: "+getStatus();
+    }
 
     @Override
     public String toString() {
-        return getId()+" "+getOpis();
+        return "Id: "+getId()+", "+getNazwaPodzespolu();
     }
 }
