@@ -53,7 +53,7 @@ public class Main
 //        JComboBox<Naprawa> naprawy = new JComboBox<>(naprawyZBazy.toArray(Naprawa[]::new));
         MyCellRenderer cellRenderer = new MyCellRenderer(600);
         DefaultListModel<String> listModel = new DefaultListModel<>();
-//        naprawyZBazy.forEach(n->listModel.addElement(n.toString()));
+        unikalneNaprawy.forEach(n->listModel.addElement(n.toString()));
         JList<String> lista = new JList<>(listModel);
         lista.setCellRenderer(cellRenderer);
 
@@ -67,6 +67,8 @@ public class Main
                 {
                     if(naprawy.getSelectedIndex() != 0) // Wybrana jakaś naprawa
                     {
+                        naprawaSzczegoly(pracownicyZBazy, naglowekLabel, pracownicy, naprawy, listModel);
+
                         Object selected = naprawy.getSelectedItem();
                         naprawy.removeAllItems();
                         naprawy.addItem("Wszystkie naprawy");
@@ -79,6 +81,15 @@ public class Main
                     }
                     else // Wybrane wszystkie naprawy
                     {
+                        naglowekLabel.setText("Lista napraw pracownika: "+pracownicy.getSelectedIndex());
+                        listModel.clear();
+                        try {
+                            pracownicyZBazy.get(pracownicy.getSelectedIndex()-1).getNaprawy().forEach(n-> listModel.addElement(n.toString()));
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
+
+
                         naprawy.removeAllItems();
                         naprawy.addItem("Wszystkie naprawy");
                         try {
@@ -92,6 +103,11 @@ public class Main
                 {
                     if(naprawy.getSelectedIndex() !=0 ) // Wybrana jakaś naprawa
                     {
+                        naglowekLabel.setText("Lista pracowników naprawy nr: "+naprawaZeStringa(unikalneNaprawy,naprawy).getId());
+                        listModel.clear();
+                        naprawaZeStringa(unikalneNaprawy,naprawy).getOsoby().forEach(p -> listModel.addElement(p.toString()));
+
+
                         Object selected = naprawy.getSelectedItem();
                         naprawy.removeAllItems();
                         naprawy.addItem("Wszystkie naprawy");
@@ -100,6 +116,10 @@ public class Main
                     }
                     else //Wybrane wszystkie naprawy
                     {
+                        naglowekLabel.setText("Lista napraw");
+                        listModel.clear();
+                        unikalneNaprawy.forEach(n->listModel.addElement(n.toString()));
+
                         naprawy.removeAllItems();
                         naprawy.addItem("Wszystkie naprawy");
                         unikalneNaprawy.forEach(n->naprawy.addItem(n.toString()));
@@ -119,6 +139,9 @@ public class Main
                 {
                     if(pracownicy.getSelectedIndex() !=0 ) // Wybrany jakiś pracownik
                     {
+                        naprawaSzczegoly(pracownicyZBazy, naglowekLabel, pracownicy, naprawy, listModel);
+
+
                         Object selected = pracownicy.getSelectedItem();
                         pracownicy.removeAllItems();
                         pracownicy.addItem("Wszyscy pracownicy");
@@ -127,6 +150,11 @@ public class Main
                     }
                     else //Wybrani wszyscy pracownicy
                     {
+                        naglowekLabel.setText("Lista pracowników naprawy nr: "+naprawaZeStringa(unikalneNaprawy,naprawy).getId());
+                        listModel.clear();
+                        naprawaZeStringa(unikalneNaprawy,naprawy).getOsoby().forEach(p -> listModel.addElement(p.toString()));
+
+
                         pracownicy.removeAllItems();
                         pracownicy.addItem("Wszyscy pracownicy");
                         naprawaZeStringa(unikalneNaprawy, naprawy).getOsoby().forEach(o -> pracownicy.addItem(o.toString()));
@@ -136,6 +164,15 @@ public class Main
                 {
                     if(pracownicy.getSelectedIndex() !=0 ) // Wybrany jakiś pracownik
                     {
+                        naglowekLabel.setText("Lista napraw pracownika: "+pracownicy.getSelectedIndex());
+                        listModel.clear();
+                        try {
+                            pracownicyZBazy.get(pracownicy.getSelectedIndex()-1).getNaprawy().forEach(n-> listModel.addElement(n.toString()));
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
+
+
                         Object selected = pracownicy.getSelectedItem();
                         pracownicy.removeAllItems();
                         pracownicy.addItem("Wszyscy pracownicy");
@@ -144,6 +181,11 @@ public class Main
                     }
                     else //Wybrani wszyscy pracownicy
                     {
+                        naglowekLabel.setText("Lista napraw");
+                        listModel.clear();
+                        unikalneNaprawy.forEach(n->listModel.addElement(n.toString()));
+
+
                         pracownicy.removeAllItems();
                         pracownicy.addItem("Wszyscy pracownicy");
                         pracownicyZBazy.forEach(p->pracownicy.addItem(p.toString()));
