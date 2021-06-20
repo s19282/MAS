@@ -1,13 +1,5 @@
 import model.*;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
@@ -21,12 +13,13 @@ public class Main
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Warsztat samochodowy");
+            frame.setBackground(Color.red);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(800,600);
             frame.setResizable(false);
 
             listaNaprawWersja2(frame);
-
+            frame.getContentPane().setBackground(Color.decode("#8ff486"));
             frame.setVisible(true);
         });
     }
@@ -35,13 +28,17 @@ public class Main
     {
         List<Osoba> pracownicyZBazy = Osoba.pobierzPracownikowZBazy();
         Set<Naprawa> unikalneNaprawy = new HashSet<>();
+        Font font = new Font("Serif", Font.PLAIN, 20);
         JLabel naglowekLabel = new JLabel("Lista napraw");
 
         JLabel pracownicyLabel = new JLabel("Pracownicy: ");
+        pracownicyLabel.setFont(font);
         JComboBox<String> pracownicy = new JComboBox<>(new String[]{"Wszyscy pracownicy"});
         pracownicyZBazy.forEach(p -> pracownicy.addItem(p.toString()));
+        pracownicy.setFont(font);
 
         JLabel naprawyLabel = new JLabel("Naprawy: ");
+        naprawyLabel.setFont(font);
         JComboBox<String> naprawy = new JComboBox<>(new String[]{"Wszystkie naprawy"});
         pracownicyZBazy.forEach(pracownik -> {
             try {
@@ -51,12 +48,13 @@ public class Main
             }
         });
         unikalneNaprawy.forEach(n -> naprawy.addItem(n.toString()));
+        naprawy.setFont(font);
 
-//        JComboBox<Naprawa> naprawy = new JComboBox<>(naprawyZBazy.toArray(Naprawa[]::new));
-        MyCellRenderer cellRenderer = new MyCellRenderer(600);
+        MyCellRenderer cellRenderer = new MyCellRenderer(525);
         DefaultListModel<String> listModel = new DefaultListModel<>();
         unikalneNaprawy.forEach(n->listModel.addElement(n.toString()));
         JList<String> lista = new JList<>(listModel);
+        lista.setPreferredSize(new Dimension(700,300));
         lista.setCellRenderer(cellRenderer);
 
         MyHelper helper = new MyHelper();
@@ -202,11 +200,6 @@ public class Main
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
 
-
-        pracownicyLabel.setBackground(Color.RED);
-        pracownicyLabel.setOpaque(true);
-
-
         c.anchor = GridBagConstraints.FIRST_LINE_START;
         c.weightx = 1;
         c.insets = new Insets(10,10,10,10);
@@ -248,10 +241,9 @@ public class Main
         naglowekLabel.setOpaque(true);
         naglowekLabel.setHorizontalAlignment(JLabel.CENTER);
         panel.setBackground(Color.decode("#8ff486"));
-        frame.setBackground(Color.decode("#8ff486"));
-        frame.setVisible(true);
         naglowekLabel.setBackground(Color.decode("#8ff486"));
-        lista.setBackground(Color.decode("#8ff486"));
+        lista.setBackground(Color.decode("#76c66f"));
+        lista.setFont(font);
     }
 
     private static Naprawa naprawaZeStringa(Set<Naprawa> unikalneNaprawy, JComboBox<String> naprawy) {
