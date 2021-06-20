@@ -1,8 +1,14 @@
 package model;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +51,42 @@ public class CzynnoscEksploatacyjna {
         {
             naprawy.remove(naprawa);
             naprawa.usunCzynnoscEksploatacyjna(this);
+        }
+    }
+
+    public static void dodajCzynnosc(String opis, Double koszt)
+    {
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        try
+        {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            session.beginTransaction();
+
+            CzynnoscEksploatacyjna czynnoscEksploatacyjna = new CzynnoscEksploatacyjna(opis, koszt);
+
+            session.save(czynnoscEksploatacyjna);
+
+            session.getTransaction().commit();
+            session.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory !=null)
+            {
+                sessionFactory.close();
+            }
         }
     }
 

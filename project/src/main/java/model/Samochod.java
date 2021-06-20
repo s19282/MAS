@@ -1,6 +1,11 @@
 package model;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -37,6 +42,42 @@ public class Samochod {
     }
 
     public Samochod() {
+    }
+
+    public static void dodajSamochod(String numerRejestracyjny, String marka, String model)
+    {
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        try
+        {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            session.beginTransaction();
+
+            Samochod samochod = new Samochod(numerRejestracyjny,marka,model);
+
+            session.save(samochod);
+
+            session.getTransaction().commit();
+            session.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory !=null)
+            {
+                sessionFactory.close();
+            }
+        }
     }
 
     public void dodajKlienta(Klient klient) throws Exception {

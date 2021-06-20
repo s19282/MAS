@@ -47,7 +47,7 @@ public class Test {
             naprawa.dodajOsobe(osobaPracownik);
             session.save(naprawa);
 
-            Klient klient = new KlientInstytucja("PJATK","010816248",345654789L);
+            Klient klient = new KlientInstytucja("PJATK","010816248",345654789L, "tttt333");
             Samochod samochod = new Samochod("CBA 23221", "Mitsubishi", "Lancer");
             osobaKlient.dodajSamochod(samochod);
             session.save(klient);

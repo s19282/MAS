@@ -1,9 +1,15 @@
 package model;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -115,6 +121,77 @@ public class Osoba extends Klient{
         {
             naprawy.remove(naprawa);
             naprawa.usunOsobe(this);
+        }
+    }
+
+    public static void dodajKlienta(String imie, String nazwisko, int numerTelefonu, String numerKlienta)
+    {
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        try
+        {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            session.beginTransaction();
+
+            Osoba osoba = new Osoba(imie,nazwisko,numerTelefonu,numerKlienta);
+
+            session.save(osoba);
+
+            session.getTransaction().commit();
+            session.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory !=null)
+            {
+                sessionFactory.close();
+            }
+        }
+    }
+    public static void dodajKlienta(String imie, String nazwisko, int numerTelefonu, String numerKlienta, Double stawkaGodzinowa, Long PESEL)
+    {
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        try
+        {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            session.beginTransaction();
+
+            Osoba osoba = new Osoba(imie,nazwisko,numerTelefonu,numerKlienta, stawkaGodzinowa, PESEL);
+
+            session.save(osoba);
+
+            session.getTransaction().commit();
+            session.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory !=null)
+            {
+                sessionFactory.close();
+            }
         }
     }
 

@@ -1,8 +1,14 @@
 package model;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -140,6 +146,42 @@ public class Naprawa {
         {
             czesci.remove(czesc);
             czesc.usunNaprawe();
+        }
+    }
+
+    public static void dodajNaprawe(String nazwaPodzespolu, String opis, LocalTime czasTrwania, Double koszt)
+    {
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        try
+        {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            session.beginTransaction();
+
+            Naprawa naprawa = new Naprawa(nazwaPodzespolu, opis, czasTrwania, koszt);
+
+            session.save(naprawa);
+
+            session.getTransaction().commit();
+            session.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory !=null)
+            {
+                sessionFactory.close();
+            }
         }
     }
 

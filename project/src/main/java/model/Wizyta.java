@@ -1,11 +1,21 @@
 package model;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 @Entity
 public class Wizyta {
@@ -46,6 +56,98 @@ public class Wizyta {
             naprawa.dodajWizyte(this);
         }
     }
+
+    public static void dodajWizyte(LocalDateTime dataGodzinaRozpoczecia, LocalDateTime przewidywanaDataGodzinaZakonczenia, Double szacowanyKoszt)
+    {
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        try
+        {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            session.beginTransaction();
+
+            Wizyta wizyta = new Wizyta(dataGodzinaRozpoczecia, przewidywanaDataGodzinaZakonczenia, szacowanyKoszt);
+
+            session.save(wizyta);
+
+            session.getTransaction().commit();
+            session.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory !=null)
+            {
+                sessionFactory.close();
+            }
+        }
+    }
+
+    public void anulujWizyte()
+    {
+        status = Status.ANULOWANA;
+    }
+
+    public static List<Wizyta> pokazListeWizyt()
+    {
+        List<Wizyta> wizyty = new ArrayList<>();
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        try
+        {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Wizyta> criteria = builder.createQuery( Wizyta.class );
+            Root<Wizyta> root = criteria.from( Wizyta.class );
+            criteria.select( root );
+            wizyty = session.createQuery( criteria ).getResultList();
+
+            session.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory !=null)
+            {
+                sessionFactory.close();
+            }
+        }
+        return wizyty;
+    }
+
+    public static boolean sprawdzDateCzyDostepna(LocalDateTime od, LocalDateTime do_)
+    {
+        AtomicBoolean dostepna = new AtomicBoolean(true);
+        pokazListeWizyt().forEach(wizyta -> {
+            if(!((od.isBefore(wizyta.dataGodzinaRozpoczecia) && do_.isBefore(wizyta.przewidywanaDataGodzinaZakonczenia))
+                    ||(od.isAfter(wizyta.dataGodzinaRozpoczecia)) && (do_.isAfter(wizyta.przewidywanaDataGodzinaZakonczenia))))
+            {
+                dostepna.set(false);
+            }
+        });
+        return dostepna.get();
+    }
+
 
     public void usunNaprawe(Naprawa naprawa){
         if(naprawy.contains(naprawa))
