@@ -1,10 +1,19 @@
 package model;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -42,6 +51,54 @@ public abstract class Klient {
             samochody.remove(samochod);
             samochod.usunKlienta(this);
         }
+    }
+
+    public static List<Klient> pokazWszystkichKlientow()
+    {
+        List<Klient> klienci = new ArrayList<>();
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        try
+        {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Osoba> criteria = builder.createQuery( Osoba.class );
+            Root<Osoba> root = criteria.from( Osoba.class );
+            criteria.select( root );
+            klienci = session.createQuery( criteria ).getResultList().stream()
+                    .filter(osoba -> osoba.getTypyOsob().contains(TypyOsoby.KLIENT_INDYWIDUALNY))
+                    .collect(Collectors.toList());
+
+            CriteriaQuery<KlientInstytucja> criteria2 = builder.createQuery( KlientInstytucja.class );
+            Root<KlientInstytucja> root2 = criteria.from( KlientInstytucja.class );
+            criteria2.select( root2 );
+            klienci.addAll(session.createQuery(criteria2).getResultList());
+
+            session.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory !=null)
+            {
+                sessionFactory.close();
+            }
+        }
+        return klienci;
+    }
+
+    public List<Samochod> pobierzWszystkieSamochodyKlienta() {
+        return samochody;
     }
 
     public Long getId() {

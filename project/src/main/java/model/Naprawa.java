@@ -8,6 +8,9 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -183,6 +186,44 @@ public class Naprawa {
                 sessionFactory.close();
             }
         }
+    }
+
+    public static List<Naprawa> pobierzNaprawyZBazy()
+    {
+        List<Naprawa> naprawy = null;
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        try
+        {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+
+            CriteriaQuery<Naprawa> criteria = builder.createQuery( Naprawa.class );
+            Root<Naprawa> root = criteria.from( Naprawa.class );
+            criteria.select( root );
+            naprawy = session.createQuery( criteria ).getResultList();
+
+            session.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory !=null)
+            {
+                sessionFactory.close();
+            }
+        }
+        return naprawy;
     }
 
     public List<Czesc> getCzesci() {

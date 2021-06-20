@@ -8,12 +8,16 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Osoba extends Klient{
@@ -333,6 +337,48 @@ public class Osoba extends Klient{
 //        TODO: implement
         return null;
     }
+
+    public static List<Osoba> pobierzPracownikowZBazy()
+    {
+        List<Osoba> pracownicy = new ArrayList<>();
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        try
+        {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+
+            CriteriaQuery<Osoba> criteria = builder.createQuery( Osoba.class );
+            Root<Osoba> root = criteria.from( Osoba.class );
+            criteria.select( root );
+            pracownicy = session.createQuery( criteria )
+                    .getResultList()
+                    .stream().filter(o -> o.getTypyOsob()
+                            .contains(TypyOsoby.PRACOWNIK)).collect(Collectors.toList());
+
+            session.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory !=null)
+            {
+                sessionFactory.close();
+            }
+        }
+        return pracownicy;
+    }
+
     public long obliczStazPracy()
     {
         long lataPracy = 0;
