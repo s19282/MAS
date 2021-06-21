@@ -196,6 +196,18 @@ public class Main
             }
         });
 
+        JPanel panel = configureLayout(frame, naglowekLabel, pracownicyLabel, pracownicy, naprawyLabel, naprawy, lista);
+
+        naglowekLabel.setFont(new Font("Serif", Font.PLAIN, 40));
+        naglowekLabel.setOpaque(true);
+        naglowekLabel.setHorizontalAlignment(JLabel.CENTER);
+        panel.setBackground(Color.decode("#8ff486"));
+        naglowekLabel.setBackground(Color.decode("#8ff486"));
+        lista.setBackground(Color.decode("#76c66f"));
+        lista.setFont(font);
+    }
+
+    private static JPanel configureLayout(JFrame frame, JLabel naglowekLabel, JLabel pracownicyLabel, JComboBox<String> pracownicy, JLabel naprawyLabel, JComboBox<String> naprawy, JList<String> lista) {
         GridBagConstraints c = new GridBagConstraints();
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
@@ -236,14 +248,7 @@ public class Main
         c.gridx = 0;
         c.gridy = 2;
         frame.add(lista,c);
-
-        naglowekLabel.setFont(new Font("Serif", Font.PLAIN, 40));
-        naglowekLabel.setOpaque(true);
-        naglowekLabel.setHorizontalAlignment(JLabel.CENTER);
-        panel.setBackground(Color.decode("#8ff486"));
-        naglowekLabel.setBackground(Color.decode("#8ff486"));
-        lista.setBackground(Color.decode("#76c66f"));
-        lista.setFont(font);
+        return panel;
     }
 
     private static Naprawa naprawaZeStringa(Set<Naprawa> unikalneNaprawy, JComboBox<String> naprawy) {

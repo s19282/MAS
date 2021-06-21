@@ -35,6 +35,7 @@ public class FillDB {
             pracownik1.dodajNaprawe(naprawa2);
             pracownik2.dodajNaprawe(naprawa2);
             pracownik3.dodajNaprawe(naprawa3);
+            pracownik4.dodajNaprawe(naprawa4);
 
             session.save(pracownik1);
             session.save(pracownik2);
